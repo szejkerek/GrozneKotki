@@ -1,10 +1,13 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameplayManager : MonoBehaviour
 {
     public static GameplayManager Instance { get; private set; }
-    
-    private void Awake()
+
+    InputMap input;
+
+    void Awake()
     {
         if (Instance != null && Instance != this)
         {
@@ -13,8 +16,43 @@ public class GameplayManager : MonoBehaviour
         }
 
         Instance = this;
+
+        input = new InputMap();
+    }
+
+    void OnEnable()
+    {
+        input.Enable();
+        
+        input.Player.Restart.performed += OnRestart;
+        input.Player.MainMenu.performed += OnMainMenu;
     }
     
+    void OnDisable()
+    {
+        input.Disable();
+        
+        input.Player.Restart.performed -= OnRestart;
+        input.Player.MainMenu.performed -= OnMainMenu;
+    }
+
+    private void OnMainMenu(InputAction.CallbackContext obj)
+    {
+        ReturnToMenu();
+    }
+
+    private void OnRestart(InputAction.CallbackContext obj)
+    {
+        RestartLevel();
+    }
+    
+    void Update()
+    {
+        if (input.Player.Restart.triggered)
+        {
+            RestartLevel();
+        }
+    }
 
     public void RestartLevel()
     {
@@ -24,7 +62,6 @@ public class GameplayManager : MonoBehaviour
     public void ReturnToMenu(string menuSceneName = "MainMenu")
     {
         Time.timeScale = 1f;
-
         Bootstrap.Instance.SceneManager.LoadScene(menuSceneName);
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerControllerInputSystem))]
 public class Player : MonoBehaviour
 {
+    [SerializeField] GhostRecorder ghostRecorder;
     [Header("Skills")]
     public List<PlayerSkill> skills = new();
 
@@ -45,5 +46,6 @@ public class Player : MonoBehaviour
     void UseSkill(int index)
     {
         skills[index].TryUse();
+        ghostRecorder.RecordSkillUse(index);
     }
 }

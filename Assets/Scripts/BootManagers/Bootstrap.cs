@@ -3,9 +3,7 @@ using UnityEngine;
 
 public class Bootstrap : MonoBehaviour
 {
-    #region Singleton
     public static Bootstrap Instance;
-
     void Awake()
     {
         if (Instance != null && Instance != this)
@@ -17,10 +15,10 @@ public class Bootstrap : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
     }
-    #endregion
     
     public AudioManager AudioManager;
     public SceneManager SceneManager;
+    public GhostRunManager GhostRunManager;
     
     private IEnumerator Start()
     {
