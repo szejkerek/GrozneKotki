@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using UnityEngine.InputSystem;
+using TMPro;
 
 public class timeBar : MonoBehaviour
 {
@@ -10,36 +11,93 @@ public class timeBar : MonoBehaviour
     public float timeLeft = 10;
     public Image bar;
     public RectTransform hourglass;
+    public TMP_Text displayedTime;
+    public TMP_Text displayedSubtractTime;
+
+    float _time;
+    float _interval = 1;
+
+    private void Start()
+    {
+        timeLeft = timeMax;
+        displayedSubtractTime.gameObject.SetActive(false);
+    }
 
     public void Update()
     {
-        bar.fillAmount = timeLeft/timeMax;
+        
         var keyboard = Keyboard.current;
 
-        if (keyboard.rKey.wasPressedThisFrame)
-            FlipHourglass();
+        if (keyboard.iKey.wasPressedThisFrame)
+            SubtractTimeUI(3, true);
+        displayedTime.text = timeLeft + "s";
 
+
+
+        _time += Time.deltaTime;
+        while (_time >= _interval)
+        {
+            SubtractTimeUI(3, false);
+            _time -= _interval;
+        }
 
     }
 
     public void AddTimeUI(float amount)
     {
-        timeLeft = Math.Clamp(timeLeft + amount, 0, timeMax);
+        FlipHourglass(false);
+        SetTimePercentUI(Math.Clamp(timeLeft + amount, 0, timeMax) / timeMax);
     }
 
-    public void SubtractTimeUI(float amount)
+    public void SubtractTimeUI(float amount, bool byEnemy)
     {
-        timeLeft = Math.Clamp(timeLeft-amount, 0, timeMax);
+        FlipHourglass(true);
+        SetTimePercentUI(Math.Clamp(timeLeft - amount, 0, timeMax)/timeMax);
+        if (byEnemy)
+        {
+            ShowWithPunch(displayedSubtractTime);
+        }
     }
 
     public void SetTimePercentUI(float percent)
     {
         timeLeft = percent * timeMax;
+        bar.DOFillAmount(timeLeft / timeMax, .3f).SetEase(Ease.Linear);
     }
 
-    public void FlipHourglass()
+    public void FlipHourglass(bool back)
     {
-        hourglass.DORotate(new Vector3(0, 0, 180), 0.4f, RotateMode.Fast);
+        if (back)
+        {
+            hourglass.Rotate(Vector3.zero);
+            hourglass.DORotate(new Vector3(0, 0, -180), 0.4f, RotateMode.Fast);
+        }
+        else
+        {
+            hourglass.Rotate(Vector3.zero);
+            hourglass.DORotate(new Vector3(0, 0, 180), 0.4f, RotateMode.Fast);
+        }
+
+    }
+
+    public void ShowWithPunch(TMP_Text text)
+    {
+        text.gameObject.SetActive(true);
+        //text.alpha = 1f;
+        text.transform.localScale = Vector3.one;
+
+        // Punch
+        text.transform.DOPunchScale(
+            punch: new Vector3(0.3f, 0.3f, 0f),
+            duration: 0.4f,
+            vibrato: 10
+        );
+
+        DOVirtual.DelayedCall(1.5f, () =>
+        {
+            text.DOFade(0f, 0.3f)
+                    .OnComplete(() => text.gameObject.SetActive(false));
+        });
     }
 
 
