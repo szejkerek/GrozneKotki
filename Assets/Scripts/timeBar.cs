@@ -25,12 +25,6 @@ public class timeBar : MonoBehaviour
 
     public void Update()
     {
-        
-        var keyboard = Keyboard.current;
-
-        if (keyboard.tKey.wasPressedThisFrame)
-            SubtractTimeUI(3, true);
-
         _time += Time.deltaTime;
         while (_time >= _interval)
         {
