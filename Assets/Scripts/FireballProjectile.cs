@@ -48,17 +48,6 @@ public class FireballProjectile : MonoBehaviour
         rb.MovePosition(newPos);
     }
 
-    void OnTriggerEnter(Collider other)
-    {
-
-
-
-        Debug.Log($"COLLISION ENTERED {other.name}");
-
-        
-        Destroy(gameObject);
-    }
-
     void OnCollisionEnter(Collision collision)
     {
         if (collision.collider.attachedRigidbody != null &&
@@ -84,10 +73,6 @@ public class FireballProjectile : MonoBehaviour
             ApplyEffects(collision.collider);
         }
         
-
-        
-        Debug.Log($"COLLISION ENTERED {collision.collider.name}");
-
         Destroy(gameObject);
     }
 
