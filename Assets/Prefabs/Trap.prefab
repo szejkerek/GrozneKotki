@@ -124,7 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 981b4ca576290b345a3eb503a815ab81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Trap
-  lifeTime: 5
+  lifeTime: 1.5
   damage: 200
   blastRadius: 3
   hitEffect: {fileID: 5234300454871195321, guid: 7a168fc442bd4ac4eb42c241aa4714e2, type: 3}
