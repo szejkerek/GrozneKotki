@@ -32,6 +32,10 @@ public class GhostPlayback : MonoBehaviour
         var controller = GetComponent<PlayerControllerInputSystem>();
         if (controller != null)
             controller.enabled = false;
+        
+        var recorder = GetComponent<GhostRecorder>();
+        if (recorder != null)
+            recorder.enabled = false;
 
         if (ghostPlayer != null)
             ghostPlayer.enabled = false;

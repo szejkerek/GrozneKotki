@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -18,6 +19,12 @@ public class GameplayManager : MonoBehaviour
         Instance = this;
 
         input = new InputMap();
+        
+    }
+
+    private void Start()
+    {
+        Bootstrap.Instance.GhostRunManager.RespawnAllGhosts();
     }
 
     void OnEnable()
@@ -56,13 +63,15 @@ public class GameplayManager : MonoBehaviour
 
     public void RestartLevel()
     {
+        
         Bootstrap.Instance.SceneManager.ReloadCurrentScene();
+        
     }
 
     public void ReturnToMenu(string menuSceneName = "MainMenu")
     {
         Time.timeScale = 1f;
-        Bootstrap.Instance.GhostRunManager.RemoveAllRuns();
         Bootstrap.Instance.SceneManager.LoadScene(menuSceneName);
+        GhostRunManager.Instance.RemoveAllRuns();
     }
 }
