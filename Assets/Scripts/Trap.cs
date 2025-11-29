@@ -27,13 +27,13 @@ public class Trap : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.attachedRigidbody != null &&
-            other.attachedRigidbody.transform == transform.root)
-            return;
+        //if (other.attachedRigidbody != null &&
+        //    other.attachedRigidbody.transform == transform.root)
+        //    return;
 
-        BlowUp();
-        activated = true;
-        Destroy(gameObject);
+        //BlowUp();
+        //activated = true;
+        //Destroy(gameObject);
     }
 
     private void BlowUp()
