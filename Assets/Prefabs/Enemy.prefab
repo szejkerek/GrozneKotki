@@ -128,7 +128,7 @@ GameObject:
   - component: {fileID: 5769689825129011906}
   m_Layer: 7
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -220,6 +220,7 @@ MonoBehaviour:
   speed: 3
   minDelta: 0.2
   maxStoredStates: 1000
+  rewindPlaybackDuration: 1
 --- !u!96 &2254708314005098977
 TrailRenderer:
   serializedVersion: 3
