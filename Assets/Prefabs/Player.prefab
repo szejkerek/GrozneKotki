@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8645657789505676959}
   - component: {fileID: 3865845995775781191}
   - component: {fileID: 6709044534234620567}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 671891369513463246}
   serializedVersion: 2
   m_LocalRotation: {x: 0.41874245, y: -0, z: -0, w: 0.908105}
-  m_LocalPosition: {x: 0.68, y: 0, z: 0.15}
+  m_LocalPosition: {x: 0.037, y: -0.28, z: 0.68}
   m_LocalScale: {x: 0.16104, y: 1, z: 0.15844727}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -121,7 +121,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7463910244775978157}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -161,7 +161,8 @@ GameObject:
   - component: {fileID: 4347921309916645816}
   - component: {fileID: 8182583811974516920}
   - component: {fileID: 3930652926197190840}
-  m_Layer: 0
+  - component: {fileID: 3436483896645947944}
+  m_Layer: 6
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -280,7 +281,7 @@ CapsuleCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -306,6 +307,7 @@ MonoBehaviour:
   skills:
   - {fileID: 3930652926197190840}
   - {fileID: 8182583811974516920}
+  - {fileID: 3436483896645947944}
   spawnPoint: {fileID: 7463910244775978157}
 --- !u!114 &8714671799788304992
 MonoBehaviour:
@@ -326,6 +328,10 @@ MonoBehaviour:
     m_Bits: 8
   groundCheckAbove: 2
   groundCheckExtra: 2
+  wallMask:
+    serializedVersion: 2
+    m_Bits: 0
+  skinWidth: 0.05
 --- !u!114 &4347921309916645816
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -371,3 +377,17 @@ MonoBehaviour:
   fireballSpeed: 20
   projectilesInBurst: 3
   timeBetweenShots: 0.12
+--- !u!114 &3436483896645947944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8857796681995623189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e43af35de0112dc41ab8e6dc7e269fb2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TrapSkill
+  cooldown: 1
+  trap: {fileID: 3774109828706338290, guid: 2f809e3bc13dab848a1e70d098c7faf1, type: 3}
