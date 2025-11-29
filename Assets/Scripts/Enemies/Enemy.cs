@@ -14,9 +14,7 @@ public class Enemies : MonoBehaviour
 
     [SerializeField] private float speed = 5f;
     [SerializeField] private float revertModifier = 2f;
-    float minDelta = 0.05f;
-
-    bool moveBackward = false;
+    [SerializeField] float minDelta = 0.05f;
 
     void Awake()
     {
