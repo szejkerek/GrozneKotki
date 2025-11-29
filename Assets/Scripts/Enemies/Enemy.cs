@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour, IDamagable
     private int index;
     private Vector3 targetPoint;
 
+    [SerializeField] private float health = 100f;
     [SerializeField] private float speed = 5f;
     [SerializeField] private float minDelta = 0.05f;
 
@@ -18,6 +19,7 @@ public class Enemy : MonoBehaviour, IDamagable
     [SerializeField] private float rewindPlaybackDuration = 1f; // ile sekund ma trwać same cofanie
 
     private Rigidbody rb;
+    private Animator animator;
 
     private bool rewinding;
 
@@ -47,6 +49,7 @@ public class Enemy : MonoBehaviour, IDamagable
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        animator = GetComponentInChildren<Animator>();
 
         core = GameObject.FindGameObjectWithTag("Core").transform;
 
@@ -186,6 +189,7 @@ public class Enemy : MonoBehaviour, IDamagable
         if (statesToRewindLeft <= 0 || history.Count == 0)
         {
             rewinding = false;
+            animator.SetBool("Backwards", false);
         }
     }
 
@@ -215,11 +219,12 @@ public class Enemy : MonoBehaviour, IDamagable
 
         statesStepAccumulator = 0f;
         rewinding = true;
+        animator.SetBool("Backwards", true);
     }
 
     public void TakeDamage(float damage)
     {
-        // tu możesz np. triggerować ReverseTime:
-        // ReverseTime(3f);
+        health -= damage;
+        if(health < 0) Destroy(gameObject);
     }
 }
