@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GhostRecorder : MonoBehaviour
 {
@@ -7,7 +8,6 @@ public class GhostRecorder : MonoBehaviour
     GhostRunData currentRun;
     float elapsed;
     float nextSample;
-
     bool recording;
 
     void OnEnable()
@@ -17,7 +17,7 @@ public class GhostRecorder : MonoBehaviour
 
     void StartNewRun()
     {
-        currentRun = new GhostRunData();
+        currentRun = new GhostRunData(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
         elapsed = 0f;
         nextSample = 0f;
         recording = true;
