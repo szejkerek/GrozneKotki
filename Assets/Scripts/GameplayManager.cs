@@ -7,6 +7,9 @@ public class GameplayManager : MonoBehaviour
     public static GameplayManager Instance { get; private set; }
 
     InputMap input;
+    
+    [SerializeField] MainCamera mainCamera;
+    [SerializeField] GameObject player;
 
     void Awake()
     {
@@ -19,6 +22,7 @@ public class GameplayManager : MonoBehaviour
         Instance = this;
 
         input = new InputMap();
+        mainCamera.Initialize(player.transform);
         
     }
 
