@@ -50,15 +50,26 @@ public class FireballProjectile : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.attachedRigidbody != null &&
-            other.attachedRigidbody.transform == transform.root)
-            return;
 
+
+
+        Debug.Log($"COLLISION ENTERED {other.name}");
+
+        
+        Destroy(gameObject);
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.attachedRigidbody != null &&
+            collision.collider.attachedRigidbody.transform == transform.root)
+            return;
+        
         if (hitEffect != null)
         {
             Instantiate(hitEffect, transform.position, Quaternion.identity);
         }
-
+        
         if (isArea)
         {
             Collider[] colliders = Physics.OverlapSphere(transform.position, blastRadius);
@@ -70,34 +81,27 @@ public class FireballProjectile : MonoBehaviour
         }
         else
         {
-            ApplyEffects(other);
+            ApplyEffects(collision.collider);
         }
+        
 
-        Destroy(gameObject);
-    }
-
-    void OnCollisionEnter(Collision collision)
-    {
-        if (hitEffect != null)
-        {
-            Instantiate(hitEffect, transform.position, Quaternion.identity);
-        }
+        
+        Debug.Log($"COLLISION ENTERED {collision.collider.name}");
 
         Destroy(gameObject);
     }
 
     void ApplyEffects(Collider other)
     {
-        IDamagable damagable = other.GetComponent<IDamagable>();
-        if (damagable != null)
+        if(other.TryGetComponent<IDamagable>(out var damagable))
         {
             damagable.TakeDamage(damage);
-        }
-
-        Enemy enemy = other.GetComponent<Enemy>();
-        if (enemy != null && revertsTime)
-        {
-            enemy.RevertTime(revertTimeTime);
+            
+            Enemy enemy = damagable.gameObject.GetComponent<Enemy>();
+            if (enemy != null && revertsTime)
+            {
+                enemy.RevertTime(revertTimeTime);
+            }
         }
     }
 }

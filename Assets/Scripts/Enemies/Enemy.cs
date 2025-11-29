@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
 using System.Collections.Generic;
-using UnityEngine.InputSystem;
 using System.Collections;
 
 public class Enemy : MonoBehaviour, IDamagable
@@ -20,19 +19,28 @@ public class Enemy : MonoBehaviour, IDamagable
     float initialY;
     bool timeReversed = false;
 
+    Rigidbody rb;
+
     void Awake()
     {
+        rb = GetComponent<Rigidbody>();
+        rb.useGravity = false;
+        rb.constraints = RigidbodyConstraints.FreezeRotation;
+
         core = GameObject.FindGameObjectWithTag("Core").transform;
+
         path = new NavMeshPath();
         NavMesh.CalculatePath(transform.position, core.position, NavMesh.AllAreas, path);
         points = new List<Vector3>(path.corners);
+
         targetPoint = transform.position;
         initialY = transform.position.y;
     }
 
     public void RevertTime(float time)
     {
-        if(timeReversed != true) StartCoroutine(RevertTimeForSeconds(time));
+        if (!timeReversed)
+            StartCoroutine(RevertTimeForSeconds(time));
     }
 
     private IEnumerator RevertTimeForSeconds(float time)
@@ -43,23 +51,23 @@ public class Enemy : MonoBehaviour, IDamagable
             targetPoint = points[index];
             targetPoint.y = initialY;
         }
+
         timeReversed = true;
+
         yield return new WaitForSeconds(time);
+
         timeReversed = false;
+
         if (index < points.Count - 1)
         {
             index++;
             targetPoint = points[index];
             targetPoint.y = initialY;
         }
-
     }
 
-
-    void Update()
+    void FixedUpdate()
     {
-        Keyboard keyboard = Keyboard.current;         
-
         if (timeReversed)
             MoveBackward();
         else
@@ -68,7 +76,9 @@ public class Enemy : MonoBehaviour, IDamagable
 
     private void MoveForward()
     {
-        if (Vector3.Distance(transform.position, targetPoint) <= minDelta)
+        Vector3 currentPos = rb.position;
+
+        if (Vector3.Distance(currentPos, targetPoint) <= minDelta)
         {
             if (index < points.Count - 1)
             {
@@ -78,12 +88,18 @@ public class Enemy : MonoBehaviour, IDamagable
             }
         }
 
-        transform.position += (targetPoint - transform.position).normalized * speed * Time.deltaTime;
+        Vector3 dir = (targetPoint - currentPos).normalized;
+        Vector3 nextPos = currentPos + dir * speed * Time.fixedDeltaTime;
+        nextPos.y = initialY;
+
+        rb.MovePosition(nextPos);
     }
 
     private void MoveBackward()
     {
-        if (Vector3.Distance(transform.position, targetPoint) <= minDelta)
+        Vector3 currentPos = rb.position;
+
+        if (Vector3.Distance(currentPos, targetPoint) <= minDelta)
         {
             if (index > 0)
             {
@@ -93,16 +109,17 @@ public class Enemy : MonoBehaviour, IDamagable
             }
         }
 
-        transform.position += (targetPoint - transform.position).normalized * speed * revertModifier * Time.deltaTime;
+        Vector3 dir = (targetPoint - currentPos).normalized;
+        Vector3 nextPos = currentPos + dir * speed * revertModifier * Time.fixedDeltaTime;
+        nextPos.y = initialY;
+
+        rb.MovePosition(nextPos);
     }
-
-
-    
 
     public void TakeDamage(float damage)
     {
         health -= damage;
-        if (health <= 0)
+        if (health <= 0f)
         {
             Die();
         }
@@ -112,5 +129,4 @@ public class Enemy : MonoBehaviour, IDamagable
     {
         Destroy(gameObject);
     }
-
 }
