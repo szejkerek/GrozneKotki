@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3543053470317752809
+--- !u!1 &5642491388620682234
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,45 +8,41 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7322572985869860514}
-  - component: {fileID: 7658313171899163033}
-  - component: {fileID: 51403071200178568}
-  - component: {fileID: 8325444742533033571}
-  - component: {fileID: 3433822938809097160}
-  - component: {fileID: 3830302653548951305}
+  - component: {fileID: 3835837057653872154}
+  - component: {fileID: 3029825958268050544}
+  - component: {fileID: 7893497091802764197}
+  - component: {fileID: 6514459441323419129}
+  - component: {fileID: 8131123631435402968}
+  - component: {fileID: 2746458882139091610}
   m_Layer: 0
-  m_Name: Main Camera
-  m_TagString: MainCamera
+  m_Name: Camera
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &7322572985869860514
-RectTransform:
+--- !u!4 &3835837057653872154
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3543053470317752809}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_GameObject: {fileID: 5642491388620682234}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.66955256, y: -0.2650753, z: 0.27946168, w: -0.6350871}
+  m_LocalPosition: {x: -8.556002, y: 36.588646, z: -12.368095}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 80.076, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 960, y: 540}
-  m_SizeDelta: {x: 1920, y: 1080}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!20 &7658313171899163033
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!20 &3029825958268050544
 Camera:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3543053470317752809}
+  m_GameObject: {fileID: 5642491388620682234}
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
@@ -74,9 +70,9 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 1
-  orthographic size: 21.76
-  m_Depth: -1
+  orthographic: 0
+  orthographic size: 5
+  m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -91,21 +87,21 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &51403071200178568
+--- !u!81 &7893497091802764197
 AudioListener:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3543053470317752809}
+  m_GameObject: {fileID: 5642491388620682234}
   m_Enabled: 1
---- !u!114 &8325444742533033571
+--- !u!114 &6514459441323419129
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3543053470317752809}
+  m_GameObject: {fileID: 5642491388620682234}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
@@ -143,33 +139,29 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!114 &3433822938809097160
+--- !u!114 &8131123631435402968
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3543053470317752809}
+  m_GameObject: {fileID: 5642491388620682234}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 91f2ca35adac6cc4ab8dabc7bd73dfc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MainCamera
   player: {fileID: 0}
-  height: 10
-  followSpeed: 10
-  basePitch: 90
-  pitchOffset: 0
-  yawOffset: 0
-  rotationSpeed: 10
-  matchPlayerYaw: 0
---- !u!114 &3830302653548951305
+  height: 25
+  smoothTime: 0.2
+  maxSpeed: 40
+--- !u!114 &2746458882139091610
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3543053470317752809}
+  m_GameObject: {fileID: 5642491388620682234}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1b248a1375b5bd546b8f67c8dcfb24b6, type: 3}
