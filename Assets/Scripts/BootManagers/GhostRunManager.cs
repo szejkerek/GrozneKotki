@@ -6,7 +6,7 @@ public class GhostRunManager : MonoBehaviour
 {
     public GhostPlayback ghostPrefab;
 
-    readonly List<GhostRunData> completedRuns = new();
+    public List<GhostRunData> completedRuns = new();
 
     void Awake()
     {

@@ -5,6 +5,10 @@ using UnityEngine;
 [Serializable]
 public class GhostRunData
 {
+    public GhostRunData(string sceneName)
+    {
+        this.sceneName = sceneName;
+    }
     public string sceneName;
     public float duration;
     public List<GhostFrameSample> frames = new();

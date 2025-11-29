@@ -62,6 +62,7 @@ public class GameplayManager : MonoBehaviour
     public void ReturnToMenu(string menuSceneName = "MainMenu")
     {
         Time.timeScale = 1f;
+        Bootstrap.Instance.GhostRunManager.RemoveAllRuns();
         Bootstrap.Instance.SceneManager.LoadScene(menuSceneName);
     }
 }
