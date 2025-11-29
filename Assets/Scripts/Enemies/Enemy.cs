@@ -20,9 +20,13 @@ public class Enemy : MonoBehaviour, IDamagable
     bool timeReversed = false;
 
     Rigidbody rb;
+    private Animator animator;
 
     void Awake()
     {
+        animator = GetComponentInChildren<Animator>();
+        RandomizeAnimation();
+
         rb = GetComponent<Rigidbody>();
         rb.useGravity = false;
         rb.constraints = RigidbodyConstraints.FreezeRotation;
@@ -36,6 +40,13 @@ public class Enemy : MonoBehaviour, IDamagable
         targetPoint = transform.position;
         initialY = transform.position.y;
     }
+
+    private void RandomizeAnimation()
+    {
+        AnimatorStateInfo state = animator.GetCurrentAnimatorStateInfo(0);
+        animator.Play(state.fullPathHash, 0, Random.Range(0f, 1f));
+    }
+
 
     public void RevertTime(float time)
     {
@@ -52,10 +63,12 @@ public class Enemy : MonoBehaviour, IDamagable
             targetPoint.y = initialY;
         }
 
+        animator.SetBool("Backward", true);
         timeReversed = true;
 
         yield return new WaitForSeconds(time);
 
+        animator.SetBool("Backward", false);
         timeReversed = false;
 
         if (index < points.Count - 1)
@@ -93,6 +106,7 @@ public class Enemy : MonoBehaviour, IDamagable
         nextPos.y = initialY;
 
         rb.MovePosition(nextPos);
+        transform.LookAt(targetPoint);
     }
 
     private void MoveBackward()
