@@ -64,9 +64,15 @@ public class FireballProjectile : MonoBehaviour
             ApplyEffects(other);
         }
 
+        Destroy(gameObject);
+    }
 
-
-
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (hitEffect != null)
+        {
+            Instantiate(hitEffect, transform.position, Quaternion.identity);
+        }
         Destroy(gameObject);
     }
 
