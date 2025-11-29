@@ -37,7 +37,7 @@ public class timeBar : MonoBehaviour
         _time += Time.deltaTime;
         while (_time >= _interval)
         {
-            SubtractTimeUI(3, false);
+            SubtractTimeUI(1, false);
             _time -= _interval;
         }
 
