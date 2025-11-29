@@ -14,5 +14,6 @@ public class Core : MonoBehaviour, IDamagable
     public void TakeDamage(float damage)
     {
         Debug.Log("Taking damage");
+        UIManager.Instance.SubtractTime(5);
     }
 }
