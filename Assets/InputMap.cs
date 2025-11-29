@@ -111,6 +111,15 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""SkillStrong"",
+                    ""type"": ""Button"",
+                    ""id"": ""37b48593-0b85-4fea-b1de-190a4256f8b0"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""AttackFast"",
                     ""type"": ""Button"",
                     ""id"": ""8fb31278-afb7-44b9-9cd8-3efdd4ebf113"",
@@ -321,6 +330,28 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""AttackStrong"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e2f66410-8045-4cc1-b14b-efa556356e5e"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SkillStrong"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2f3c6220-1d56-4e7d-8f70-225b1312fb28"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SkillStrong"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -976,6 +1007,7 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_AttackStrong = m_Player.FindAction("AttackStrong", throwIfNotFound: true);
+        m_Player_SkillStrong = m_Player.FindAction("SkillStrong", throwIfNotFound: true);
         m_Player_AttackFast = m_Player.FindAction("AttackFast", throwIfNotFound: true);
         m_Player_Restart = m_Player.FindAction("Restart", throwIfNotFound: true);
         m_Player_MainMenu = m_Player.FindAction("MainMenu", throwIfNotFound: true);
@@ -1075,6 +1107,7 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_AttackStrong;
+    private readonly InputAction m_Player_SkillStrong;
     private readonly InputAction m_Player_AttackFast;
     private readonly InputAction m_Player_Restart;
     private readonly InputAction m_Player_MainMenu;
@@ -1098,6 +1131,10 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/AttackStrong".
         /// </summary>
         public InputAction @AttackStrong => m_Wrapper.m_Player_AttackStrong;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/SkillStrong".
+        /// </summary>
+        public InputAction @SkillStrong => m_Wrapper.m_Player_SkillStrong;
         /// <summary>
         /// Provides access to the underlying input action "Player/AttackFast".
         /// </summary>
@@ -1146,6 +1183,9 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
             @AttackStrong.started += instance.OnAttackStrong;
             @AttackStrong.performed += instance.OnAttackStrong;
             @AttackStrong.canceled += instance.OnAttackStrong;
+            @SkillStrong.started += instance.OnSkillStrong;
+            @SkillStrong.performed += instance.OnSkillStrong;
+            @SkillStrong.canceled += instance.OnSkillStrong;
             @AttackFast.started += instance.OnAttackFast;
             @AttackFast.performed += instance.OnAttackFast;
             @AttackFast.canceled += instance.OnAttackFast;
@@ -1175,6 +1215,9 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
             @AttackStrong.started -= instance.OnAttackStrong;
             @AttackStrong.performed -= instance.OnAttackStrong;
             @AttackStrong.canceled -= instance.OnAttackStrong;
+            @SkillStrong.started -= instance.OnSkillStrong;
+            @SkillStrong.performed -= instance.OnSkillStrong;
+            @SkillStrong.canceled -= instance.OnSkillStrong;
             @AttackFast.started -= instance.OnAttackFast;
             @AttackFast.performed -= instance.OnAttackFast;
             @AttackFast.canceled -= instance.OnAttackFast;
@@ -1501,6 +1544,13 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnAttackStrong(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "SkillStrong" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnSkillStrong(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "AttackFast" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
