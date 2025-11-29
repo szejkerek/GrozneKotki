@@ -217,10 +217,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c87f23bf6dc1a44b89316ebae79aaf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemies
-  speed: 3
+  health: 100
+  speed: 1
   minDelta: 0.2
   maxStoredStates: 1000
+<<<<<<< Updated upstream
   rewindPlaybackDuration: 1
+=======
+  rewindPlaybackDuration: 0.5
+>>>>>>> Stashed changes
 --- !u!96 &2254708314005098977
 TrailRenderer:
   serializedVersion: 3
@@ -269,7 +274,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 0.1
+  m_Time: 0.5
   m_PreviewTimeScale: 1
   m_Parameters:
     serializedVersion: 3
