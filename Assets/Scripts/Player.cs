@@ -6,6 +6,7 @@ public class Player : MonoBehaviour
 {
     [Header("Skills")]
     public PlayerSkill primarySkill;
+    public PlayerSkill secondarySkill;
 
     InputMap inputActions;
     public Transform spawnPoint;
@@ -27,10 +28,14 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if (primarySkill != null && inputActions.Player.Attack.triggered)
+        if (primarySkill != null && inputActions.Player.AttackFast.triggered)
         {
-            Debug.Log("X");
-           // primarySkill.TryUse(this);
+           primarySkill.TryUse();
+        }
+        
+        if (secondarySkill != null && inputActions.Player.AttackStrong.triggered)
+        {
+            secondarySkill.TryUse();
         }
     }
 }

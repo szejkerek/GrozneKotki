@@ -14,20 +14,19 @@ public class FireballSkill : PlayerSkill
             return;
         }
 
-    
-        Transform spawnPoint = _player.spawnPoint;
-
-        Vector3 direction = spawnPoint.forward;
+        // ShootingPoint przypisujesz w inspectorze do _player.spawnPoint
+        Transform shootingPoint = _player.spawnPoint;
+        
+        Vector3 direction = _player.transform.forward;
         if (direction.sqrMagnitude < 0.0001f)
             direction = Vector3.forward;
 
         GameObject fireball = Instantiate(
             fireballPrefab,
-            spawnPoint.position,
+            shootingPoint.position,
             Quaternion.LookRotation(direction, Vector3.up)
         );
 
-        // tell projectile which way and how fast
         FireballProjectile projectile = fireball.GetComponent<FireballProjectile>();
         if (projectile != null)
         {
