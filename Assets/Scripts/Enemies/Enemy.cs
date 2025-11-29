@@ -17,6 +17,8 @@ public class Enemies : MonoBehaviour, IDamagable
     [SerializeField] float minDelta = 0.05f;
     [SerializeField] float health = 100f;
 
+    float initialY;
+
     void Awake()
     {
         core = GameObject.FindGameObjectWithTag("Core").transform;
@@ -24,6 +26,7 @@ public class Enemies : MonoBehaviour, IDamagable
         NavMesh.CalculatePath(transform.position, core.position, NavMesh.AllAreas, path);
         points = new List<Vector3>(path.corners);
         targetPoint = transform.position;
+        initialY = transform.position.y;
     }
 
     void Update()
@@ -33,14 +36,14 @@ public class Enemies : MonoBehaviour, IDamagable
         {
             index--;
             targetPoint = points[index];
-            targetPoint.y = 0;
+            targetPoint.y = initialY;
         }
             
         else if (keyboard.rKey.wasReleasedThisFrame)
         {
             index++;
             targetPoint = points[index];
-            targetPoint.y = 0;
+            targetPoint.y = initialY;
         }
             
 
@@ -58,7 +61,7 @@ public class Enemies : MonoBehaviour, IDamagable
             {
                 index++;
                 targetPoint = points[index];
-                targetPoint.y = 0;
+                targetPoint.y = initialY;
             }
         }
 
@@ -78,7 +81,7 @@ public class Enemies : MonoBehaviour, IDamagable
             {
                 index--;
                 targetPoint = points[index];
-                targetPoint.y = 0;
+                targetPoint.y = initialY;
             }
         }
 

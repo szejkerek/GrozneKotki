@@ -23,12 +23,14 @@ public class Player : MonoBehaviour
 
         inputActions.Player.AttackStrong.performed += OnAttackStrong;
         inputActions.Player.AttackFast.performed += OnAttackFast;
+        inputActions.Player.SkillStrong.performed += OnSkillStrong;
     }
 
     void OnDisable()
     {
         inputActions.Player.AttackStrong.performed -= OnAttackStrong;
         inputActions.Player.AttackFast.performed -= OnAttackFast;
+        inputActions.Player.SkillStrong.performed -= OnSkillStrong;
 
         inputActions.Disable();
     }
@@ -41,6 +43,11 @@ public class Player : MonoBehaviour
     private void OnAttackFast(InputAction.CallbackContext ctx)
     {
         UseSkill(1);
+    }
+
+    private void OnSkillStrong(InputAction.CallbackContext ctx)
+    {
+        UseSkill(2);
     }
 
     void UseSkill(int index)
