@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
+[RequireComponent(typeof(Rigidbody))]
 public class FireballProjectile : MonoBehaviour
 {
     public float speed = 15f;
@@ -18,6 +19,15 @@ public class FireballProjectile : MonoBehaviour
     Vector3 direction;
     bool launched;
 
+    Rigidbody rb;
+
+    void Awake()
+    {
+        rb = GetComponent<Rigidbody>();
+        rb.useGravity = false;  
+        rb.isKinematic = false;  
+    }
+
     public void Launch(Vector3 dir, float overrideSpeed = 0f)
     {
         direction = dir.normalized;
@@ -25,7 +35,7 @@ public class FireballProjectile : MonoBehaviour
             speed = overrideSpeed;
 
         launched = true;
-        
+
         Destroy(gameObject, lifeTime);
     }
 
@@ -34,24 +44,34 @@ public class FireballProjectile : MonoBehaviour
         if (!launched)
             return;
 
-        transform.position += direction * speed * Time.deltaTime;
+        Vector3 newPos = rb.position + direction * speed * Time.deltaTime;
+        rb.MovePosition(newPos);
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.attachedRigidbody != null &&
-            other.attachedRigidbody.transform == transform.root)
-            return;
 
+
+
+        Debug.Log($"COLLISION ENTERED {other.name}");
+
+        
+        Destroy(gameObject);
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.attachedRigidbody != null &&
+            collision.collider.attachedRigidbody.transform == transform.root)
+            return;
+        
         if (hitEffect != null)
         {
             Instantiate(hitEffect, transform.position, Quaternion.identity);
         }
-
-        if(isArea)
+        
+        if (isArea)
         {
-            List<IDamagable> result = new List<IDamagable>();
-
             Collider[] colliders = Physics.OverlapSphere(transform.position, blastRadius);
 
             foreach (Collider col in colliders)
@@ -61,33 +81,26 @@ public class FireballProjectile : MonoBehaviour
         }
         else
         {
-            ApplyEffects(other);
+            ApplyEffects(collision.collider);
         }
+        
+
+        
+        Debug.Log($"COLLISION ENTERED {collision.collider.name}");
 
         Destroy(gameObject);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    void ApplyEffects(Collider other)
     {
-        if (hitEffect != null)
+        if(other.TryGetComponent<IDamagable>(out var damagable))
         {
-            Instantiate(hitEffect, transform.position, Quaternion.identity);
-        }
-        Destroy(gameObject);
-    }
-
-    private void ApplyEffects(Collider other)
-    {
-        if (other.GetComponent<IDamagable>() != null)
-        {
-            other.GetComponent<IDamagable>().TakeDamage(damage);
-        }
-
-        if (other.GetComponent<Enemy>() != null)
-        {
-            if (revertsTime)
+            damagable.TakeDamage(damage);
+            
+            Enemy enemy = damagable.gameObject.GetComponent<Enemy>();
+            if (enemy != null && revertsTime)
             {
-                other.GetComponent<Enemy>().RevertTime(revertTimeTime);
+                enemy.RevertTime(revertTimeTime);
             }
         }
     }

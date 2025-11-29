@@ -28,16 +28,13 @@ public class timeBar : MonoBehaviour
         
         var keyboard = Keyboard.current;
 
-        if (keyboard.iKey.wasPressedThisFrame)
+        if (keyboard.tKey.wasPressedThisFrame)
             SubtractTimeUI(3, true);
-        displayedTime.text = timeLeft + "s";
-
-
 
         _time += Time.deltaTime;
         while (_time >= _interval)
         {
-            SubtractTimeUI(1, false);
+            SubtractTimeUI(_interval, false);
             _time -= _interval;
         }
 
@@ -51,10 +48,11 @@ public class timeBar : MonoBehaviour
 
     public void SubtractTimeUI(float amount, bool byEnemy)
     {
-        FlipHourglass(true);
+        displayedTime.text = Mathf.Round(timeLeft * 1.0f) + "s";
         SetTimePercentUI(Math.Clamp(timeLeft - amount, 0, timeMax)/timeMax);
         if (byEnemy)
         {
+            FlipHourglass(true);
             ShowWithPunch(displayedSubtractTime);
         }
     }
@@ -69,21 +67,24 @@ public class timeBar : MonoBehaviour
     {
         if (back)
         {
-            hourglass.Rotate(Vector3.zero);
-            hourglass.DORotate(new Vector3(0, 0, -180), 0.4f, RotateMode.Fast);
+            //hourglass.Rotate(Vector3.zero);
+            hourglass.DORotate(hourglass.eulerAngles + new Vector3(0, 0, 180), 0.4f, RotateMode.Fast);
         }
         else
         {
-            hourglass.Rotate(Vector3.zero);
-            hourglass.DORotate(new Vector3(0, 0, 180), 0.4f, RotateMode.Fast);
+            //hourglass.Rotate(Vector3.zero);
+            hourglass.DORotate(hourglass.eulerAngles + new Vector3(0, 0, 180), 0.4f, RotateMode.Fast);
         }
 
     }
 
     public void ShowWithPunch(TMP_Text text)
     {
+        text.DOKill(true);
+        text.transform.DOKill(true);
+
         text.gameObject.SetActive(true);
-        //text.alpha = 1f;
+        text.alpha = 1f;
         text.transform.localScale = Vector3.one;
 
         // Punch
@@ -95,7 +96,7 @@ public class timeBar : MonoBehaviour
 
         DOVirtual.DelayedCall(1.5f, () =>
         {
-            text.DOFade(0f, 0.3f)
+            text.DOFade(0f, 0.4f)
                     .OnComplete(() => text.gameObject.SetActive(false));
         });
     }
