@@ -1,4 +1,3 @@
-using NUnit.Framework.Internal;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -10,10 +9,9 @@ public class Enemy : MonoBehaviour, IDamagable
     private List<Vector3> points;
     private int index;
     private Vector3 targetPoint;
-    [SerializeField] private float health = 100;
+
     [SerializeField] private float speed = 5f;
     [SerializeField] private float minDelta = 0.05f;
-    [SerializeField] private float cornerJitterRadius = 0.05f;
 
     [Header("Time rewind")]
     [SerializeField] private int maxStoredStates = 700;      // ile klatek historii
@@ -27,8 +25,6 @@ public class Enemy : MonoBehaviour, IDamagable
     private int statesToRewindLeft;
     private float statesPerFrame;
     private float statesStepAccumulator;
-
-    private Animator animator;
 
     private struct EnemyState
     {
@@ -48,42 +44,9 @@ public class Enemy : MonoBehaviour, IDamagable
 
     private readonly List<EnemyState> history = new List<EnemyState>();
 
-    private void RandomizePathCorners()
-    {
-        if (points == null || points.Count < 2)
-            return;
-
-        for (int i = 1; i < points.Count - 1; i++)
-        {
-            Vector2 offset = Random.insideUnitCircle * cornerJitterRadius;
-            Vector3 jittered = points[i] + new Vector3(offset.x, 0f, offset.y);
-
-            if (TryProjectToNavMesh(jittered, cornerJitterRadius * 2f, out Vector3 snapped))
-            {
-                points[i] = snapped;
-            }
-        }
-    }
-
-
-    private bool TryProjectToNavMesh(Vector3 src, float maxDistance, out Vector3 result)
-    {
-        if (NavMesh.SamplePosition(src, out NavMeshHit hit, maxDistance, NavMesh.AllAreas))
-        {
-            result = hit.position;
-            return true;
-        }
-
-        result = src;
-        return false;
-    }
-
-
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        animator = GetComponentInChildren<Animator>();
-        RandomizeAnimationPoint();
 
         core = GameObject.FindGameObjectWithTag("Core").transform;
 
@@ -91,7 +54,6 @@ public class Enemy : MonoBehaviour, IDamagable
         NavMesh.CalculatePath(transform.position, core.position, NavMesh.AllAreas, path);
 
         points = new List<Vector3>(path.corners);
-        RandomizePathCorners();
 
         if (points.Count > 0)
         {
@@ -133,12 +95,6 @@ public class Enemy : MonoBehaviour, IDamagable
             RecordState();
             MoveAlongPath();
         }
-    }
-
-    private void RandomizeAnimationPoint()
-    {
-        AnimatorStateInfo info = animator.GetCurrentAnimatorStateInfo(0);
-        animator.Play(info.fullPathHash, 0, Random.Range(0f, 1f));
     }
 
     private void MoveAlongPath()
@@ -189,8 +145,6 @@ public class Enemy : MonoBehaviour, IDamagable
         if (statesToRewindLeft <= 0 || history.Count == 0)
         {
             rewinding = false;
-            animator.SetBool("Backward", false);
-            RandomizeAnimationPoint();
             return;
         }
 
@@ -261,14 +215,10 @@ public class Enemy : MonoBehaviour, IDamagable
 
         statesStepAccumulator = 0f;
         rewinding = true;
-        animator.SetBool("Backward", true);
-        RandomizeAnimationPoint();
     }
 
     public void TakeDamage(float damage)
     {
-        health -= damage;
-        if(health < 0) Destroy(gameObject);
         // tu możesz np. triggerować ReverseTime:
         // ReverseTime(3f);
     }
