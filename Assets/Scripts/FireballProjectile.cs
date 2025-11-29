@@ -85,7 +85,7 @@ public class FireballProjectile : MonoBehaviour
             Enemy enemy = damagable.gameObject.GetComponent<Enemy>();
             if (enemy != null && revertsTime)
             {
-                enemy.RevertTime(revertTimeTime);
+                enemy.ReverseTime(revertTimeTime);
             }
         }
     }
