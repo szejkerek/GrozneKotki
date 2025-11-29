@@ -301,8 +301,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 943fdef4178bbe74fb598a8c715d2054, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
-  primarySkill: {fileID: 3930652926197190840}
-  secondarySkill: {fileID: 8182583811974516920}
+  skills:
+  - {fileID: 3930652926197190840}
+  - {fileID: 8182583811974516920}
   spawnPoint: {fileID: 7463910244775978157}
 --- !u!114 &8714671799788304992
 MonoBehaviour:

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -5,10 +6,9 @@ using UnityEngine.InputSystem;
 public class Player : MonoBehaviour
 {
     [Header("Skills")]
-    public PlayerSkill primarySkill;
-    public PlayerSkill secondarySkill;
+    public List<PlayerSkill> skills = new();
 
-    InputMap inputActions;
+    private InputMap inputActions;
     public Transform spawnPoint;
 
     void Awake()
@@ -19,23 +19,31 @@ public class Player : MonoBehaviour
     void OnEnable()
     {
         inputActions.Enable();
+
+        inputActions.Player.AttackStrong.performed += OnAttackStrong;
+        inputActions.Player.AttackFast.performed += OnAttackFast;
     }
 
     void OnDisable()
     {
+        inputActions.Player.AttackStrong.performed -= OnAttackStrong;
+        inputActions.Player.AttackFast.performed -= OnAttackFast;
+
         inputActions.Disable();
     }
 
-    void Update()
+    private void OnAttackStrong(InputAction.CallbackContext ctx)
     {
-        if (primarySkill != null && inputActions.Player.AttackFast.triggered)
-        {
-           primarySkill.TryUse();
-        }
-        
-        if (secondarySkill != null && inputActions.Player.AttackStrong.triggered)
-        {
-            secondarySkill.TryUse();
-        }
+        UseSkill(0);
+    }
+
+    private void OnAttackFast(InputAction.CallbackContext ctx)
+    {
+        UseSkill(1);
+    }
+
+    void UseSkill(int index)
+    {
+        skills[index].TryUse();
     }
 }
