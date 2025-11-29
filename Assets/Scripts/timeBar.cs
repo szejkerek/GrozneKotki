@@ -59,7 +59,7 @@ public class timeBar : MonoBehaviour
 
     public void SetTimePercentUI(float percent)
     {
-        timeLeft = percent * timeMax;
+        timeLeft = percent * timeMax; //???????????
         bar.DOFillAmount(timeLeft / timeMax, .3f).SetEase(Ease.Linear);
     }
 
