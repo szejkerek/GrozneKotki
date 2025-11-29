@@ -124,7 +124,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21a4b9ed91264861b98f54a457b1b234, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FireballProjectile
-  speed: 20
+  speed: 40
   lifeTime: 3
-  damage: 50
-  hitEffect: {fileID: 0}
+  damage: 35
+  hitEffect: {fileID: 5234300454871195321, guid: 6f8783ce4d86e7046bc62dc10ffdbbf7, type: 3}
+  revertsTime: 0
+  revertTimeTime: 3
+  isArea: 0
+  blastRadius: 3

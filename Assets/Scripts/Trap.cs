@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,7 +14,14 @@ public class Trap : MonoBehaviour
 
     public void Awake()
     {
-        Destroy(gameObject, lifeTime);
+        StartCoroutine(ExplodeAfterSeconds(lifeTime));
+    }
+
+    private IEnumerator ExplodeAfterSeconds(float time)
+    {
+        yield return new WaitForSeconds(time);
+        BlowUp();
+        Destroy(gameObject);
     }
 
 

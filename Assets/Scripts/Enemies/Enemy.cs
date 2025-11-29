@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using System.Collections;
 
-public class Enemies : MonoBehaviour, IDamagable
+public class Enemy : MonoBehaviour, IDamagable
 {
     private Transform core;
     private NavMeshPath path;
@@ -18,6 +18,7 @@ public class Enemies : MonoBehaviour, IDamagable
     [SerializeField] float health = 100f;
 
     float initialY;
+    bool timeReversed = false;
 
     void Awake()
     {
@@ -29,25 +30,37 @@ public class Enemies : MonoBehaviour, IDamagable
         initialY = transform.position.y;
     }
 
-    void Update()
+    public void RevertTime(float time)
     {
-        Keyboard keyboard = Keyboard.current;
-        if (keyboard.rKey.wasPressedThisFrame)
+        if(timeReversed != true) StartCoroutine(RevertTimeForSeconds(time));
+    }
+
+    private IEnumerator RevertTimeForSeconds(float time)
+    {
+        if (index > 0)
         {
             index--;
             targetPoint = points[index];
             targetPoint.y = initialY;
         }
-            
-        else if (keyboard.rKey.wasReleasedThisFrame)
+        timeReversed = true;
+        yield return new WaitForSeconds(time);
+        timeReversed = false;
+        if (index < points.Count - 1)
         {
             index++;
             targetPoint = points[index];
             targetPoint.y = initialY;
         }
-            
 
-        if (keyboard.rKey.isPressed)
+    }
+
+
+    void Update()
+    {
+        Keyboard keyboard = Keyboard.current;         
+
+        if (timeReversed)
             MoveBackward();
         else
             MoveForward();
@@ -66,11 +79,6 @@ public class Enemies : MonoBehaviour, IDamagable
         }
 
         transform.position += (targetPoint - transform.position).normalized * speed * Time.deltaTime;
-
-        for (int i = index; i < points.Count - 1; i++)
-        {
-            Debug.DrawLine(points[i], points[i + 1], Color.red);
-        }
     }
 
     private void MoveBackward()
@@ -83,11 +91,6 @@ public class Enemies : MonoBehaviour, IDamagable
                 targetPoint = points[index];
                 targetPoint.y = initialY;
             }
-        }
-
-        for (int i = index; i > 1; i--)
-        {
-            Debug.DrawLine(points[i], points[i - 1], Color.red);
         }
 
         transform.position += (targetPoint - transform.position).normalized * speed * revertModifier * Time.deltaTime;

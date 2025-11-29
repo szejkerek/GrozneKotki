@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
@@ -7,6 +8,12 @@ public class FireballProjectile : MonoBehaviour
     public float lifeTime = 3f;
     public float damage = 40f;
     public GameObject hitEffect;
+
+    public bool revertsTime = false;
+    public float revertTimeTime = 3f;
+
+    public bool isArea = false;
+    public float blastRadius = 3f;
 
     Vector3 direction;
     bool launched;
@@ -41,11 +48,41 @@ public class FireballProjectile : MonoBehaviour
             Instantiate(hitEffect, transform.position, Quaternion.identity);
         }
 
-        if(other.GetComponent<IDamagable>() != null)
+        if(isArea)
+        {
+            List<IDamagable> result = new List<IDamagable>();
+
+            Collider[] colliders = Physics.OverlapSphere(transform.position, blastRadius);
+
+            foreach (Collider col in colliders)
+            {
+                ApplyEffects(col);
+            }
+        }
+        else
+        {
+            ApplyEffects(other);
+        }
+
+
+
+
+        Destroy(gameObject);
+    }
+
+    private void ApplyEffects(Collider other)
+    {
+        if (other.GetComponent<IDamagable>() != null)
         {
             other.GetComponent<IDamagable>().TakeDamage(damage);
         }
 
-        Destroy(gameObject);
+        if (other.GetComponent<Enemy>() != null)
+        {
+            if (revertsTime)
+            {
+                other.GetComponent<Enemy>().RevertTime(revertTimeTime);
+            }
+        }
     }
 }
