@@ -45,7 +45,6 @@ public class PlayerControllerInputSystem : MonoBehaviour
         Vector3 moveDelta = input * moveSpeed * Time.deltaTime;
         transform.position += moveDelta;
 
-        SnapToGround();
 
         if (input.sqrMagnitude > 0.001f)
         {

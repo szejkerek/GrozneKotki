@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using System.Collections;
 
-public class Enemies : MonoBehaviour
+public class Enemies : MonoBehaviour, IDamagable
 {
     private Transform core;
     private NavMeshPath path;
@@ -15,6 +15,7 @@ public class Enemies : MonoBehaviour
     [SerializeField] private float speed = 5f;
     [SerializeField] private float revertModifier = 2f;
     [SerializeField] float minDelta = 0.05f;
+    [SerializeField] float health = 100f;
 
     void Awake()
     {
@@ -32,12 +33,14 @@ public class Enemies : MonoBehaviour
         {
             index--;
             targetPoint = points[index];
+            targetPoint.y = 0;
         }
             
         else if (keyboard.rKey.wasReleasedThisFrame)
         {
             index++;
             targetPoint = points[index];
+            targetPoint.y = 0;
         }
             
 
@@ -47,9 +50,6 @@ public class Enemies : MonoBehaviour
             MoveForward();
     }
 
-    
-
-
     private void MoveForward()
     {
         if (Vector3.Distance(transform.position, targetPoint) <= minDelta)
@@ -58,6 +58,7 @@ public class Enemies : MonoBehaviour
             {
                 index++;
                 targetPoint = points[index];
+                targetPoint.y = 0;
             }
         }
 
@@ -77,6 +78,7 @@ public class Enemies : MonoBehaviour
             {
                 index--;
                 targetPoint = points[index];
+                targetPoint.y = 0;
             }
         }
 
@@ -86,6 +88,23 @@ public class Enemies : MonoBehaviour
         }
 
         transform.position += (targetPoint - transform.position).normalized * speed * revertModifier * Time.deltaTime;
+    }
+
+
+    
+
+    public void TakeDamage(float damage)
+    {
+        health -= damage;
+        if (health <= 0)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        Destroy(gameObject);
     }
 
 }
