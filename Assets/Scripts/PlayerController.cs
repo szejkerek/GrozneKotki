@@ -12,6 +12,7 @@ public class PlayerControllerInputSystem : MonoBehaviour
     private InputMap inputActions;
     private CapsuleCollider capsule;
     private Rigidbody rb;
+    private Animator animator;
 
     void Awake()
     {
@@ -22,6 +23,8 @@ public class PlayerControllerInputSystem : MonoBehaviour
         rb.useGravity = true;                 // Rigidbody gravity
         rb.isKinematic = false;               // dynamic rigidbody for collisions
         rb.constraints = RigidbodyConstraints.FreezeRotation;
+
+        animator = GetComponentInChildren<Animator>();
     }
 
     void OnEnable() => inputActions.Enable();
@@ -36,6 +39,8 @@ public class PlayerControllerInputSystem : MonoBehaviour
     {
         Vector2 moveInput = inputActions.Player.Move.ReadValue<Vector2>();
         Vector3 input = new Vector3(moveInput.x, 0f, moveInput.y);
+
+        animator.SetBool("Running", input.magnitude > 0.1f);
 
         float mag = input.magnitude;
         if (mag > 1f) input /= mag;
