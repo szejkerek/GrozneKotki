@@ -17,7 +17,7 @@ public class Enemy : MonoBehaviour, IDamagable
     [Header("Time rewind")]
     [SerializeField] private int maxStoredStates = 700;      // ile klatek historii
     [SerializeField] private float rewindPlaybackDuration = 1f; // ile sekund ma trwać same cofanie
-
+    [SerializeField] private float cornerJitterRadius = 0.05f;
     private Rigidbody rb;
     private Animator animator;
 
@@ -51,12 +51,15 @@ public class Enemy : MonoBehaviour, IDamagable
         rb = GetComponent<Rigidbody>();
         animator = GetComponentInChildren<Animator>();
 
+        RandomizeAnimation();
+
         core = GameObject.FindGameObjectWithTag("Core").transform;
 
         path = new NavMeshPath();
         NavMesh.CalculatePath(transform.position, core.position, NavMesh.AllAreas, path);
 
         points = new List<Vector3>(path.corners);
+        RandomizePathCorners();
 
         if (points.Count > 0)
         {
@@ -67,6 +70,13 @@ public class Enemy : MonoBehaviour, IDamagable
         {
             targetPoint = core.position;
         }
+    }
+
+    private void RandomizeAnimation()
+    {
+        AnimatorStateInfo info = animator.GetCurrentAnimatorStateInfo(0);
+        float random = Random.Range(0f, 1f);
+        animator.Play(info.fullPathHash, 0, random);
     }
 
     private void Update()
@@ -87,6 +97,8 @@ public class Enemy : MonoBehaviour, IDamagable
         }
     }
 
+
+
     private void FixedUpdate()
     {
         if (rewinding)
@@ -99,6 +111,39 @@ public class Enemy : MonoBehaviour, IDamagable
             MoveAlongPath();
         }
     }
+
+    private bool TryProjectToNavMesh(Vector3 src, float maxDistance, out Vector3 result)
+    {
+        if (NavMesh.SamplePosition(src, out NavMeshHit hit, maxDistance, NavMesh.AllAreas))
+        {
+            result = hit.position;
+            return true;
+        }
+
+        result = src;
+        return false;
+    }
+
+    private void RandomizePathCorners()
+    {
+        if (points == null || points.Count < 2)
+            return;
+
+        for (int i = 1; i < points.Count - 1; i++)
+        {
+            // random 2D offset
+            Vector2 offset = Random.insideUnitCircle * cornerJitterRadius;
+            Vector3 jittered = points[i] + new Vector3(offset.x, 0f, offset.y);
+
+            // snap back to navmesh
+            if (TryProjectToNavMesh(jittered, cornerJitterRadius * 2f, out Vector3 snapped))
+            {
+                points[i] = snapped;
+            }
+            // else keep the original corner (do nothing)
+        }
+    }
+
 
     private void MoveAlongPath()
     {
@@ -190,6 +235,7 @@ public class Enemy : MonoBehaviour, IDamagable
         {
             rewinding = false;
             animator.SetBool("Backwards", false);
+            RandomizeAnimation();
         }
     }
 
@@ -220,6 +266,7 @@ public class Enemy : MonoBehaviour, IDamagable
         statesStepAccumulator = 0f;
         rewinding = true;
         animator.SetBool("Backwards", true);
+        RandomizeAnimation();
     }
 
     public void TakeDamage(float damage)

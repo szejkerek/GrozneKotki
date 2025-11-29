@@ -217,7 +217,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c87f23bf6dc1a44b89316ebae79aaf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemies
-  speed: 3
+  health: 100
+  speed: 1
   minDelta: 0.2
   maxStoredStates: 1000
   rewindPlaybackDuration: 1
