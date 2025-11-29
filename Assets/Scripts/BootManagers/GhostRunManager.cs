@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GhostRunManager : MonoBehaviour
 {
@@ -8,14 +7,31 @@ public class GhostRunManager : MonoBehaviour
 
     public List<GhostRunData> completedRuns = new();
 
+    public static GhostRunManager Instance { get; private set; }
+
     void Awake()
     {
-        UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    public void RespawnAllGhosts()
     {
-        var toSpawn = completedRuns.FindAll(r => r.sceneName == scene.name);
+        string currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+
+        if (currentScene == "MainMenu")
+        {
+            RemoveAllRuns();
+            return;
+        }
+
+        var toSpawn = completedRuns.FindAll(r => r.sceneName == currentScene);
         SpawnAllGhosts(toSpawn);
     }
 
@@ -31,12 +47,12 @@ public class GhostRunManager : MonoBehaviour
     {
         completedRuns.Clear();
     }
-    
+
     void SpawnAllGhosts(List<GhostRunData> toSpawn)
     {
-        if (toSpawn == null)
+        if (toSpawn == null || toSpawn.Count == 0)
             return;
-        
+
         if (ghostPrefab == null)
             return;
 
