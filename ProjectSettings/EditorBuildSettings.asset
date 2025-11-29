@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Wojtek_Testing.unity
+    guid: 5c3feaa6125ea2c4ca8463f0be89c18a
+  - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: 5c6585cc3c6f8534583e152165942657
   - enabled: 1

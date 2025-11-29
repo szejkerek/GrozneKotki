@@ -7,11 +7,12 @@ public class PlayerControllerInputSystem : MonoBehaviour
 {
     [Header("Movement")]
     public float moveSpeed = 5f;
-    public float rotationSpeed = 720f;
+    public float rotationSpeed = 10f;   // treat this as responsiveness
 
     private InputMap inputActions;
     private CapsuleCollider capsule;
     private Rigidbody rb;
+    private Animator animator;
 
     void Awake()
     {
@@ -19,9 +20,12 @@ public class PlayerControllerInputSystem : MonoBehaviour
         capsule = GetComponent<CapsuleCollider>();
         rb = GetComponent<Rigidbody>();
 
-        rb.useGravity = true;                 // Rigidbody gravity
-        rb.isKinematic = false;               // dynamic rigidbody for collisions
+        rb.useGravity = true;
+        rb.isKinematic = false;
         rb.constraints = RigidbodyConstraints.FreezeRotation;
+        rb.interpolation = RigidbodyInterpolation.Interpolate;   // smoother visual motion
+
+        animator = GetComponentInChildren<Animator>();
     }
 
     void OnEnable() => inputActions.Enable();
@@ -37,23 +41,25 @@ public class PlayerControllerInputSystem : MonoBehaviour
         Vector2 moveInput = inputActions.Player.Move.ReadValue<Vector2>();
         Vector3 input = new Vector3(moveInput.x, 0f, moveInput.y);
 
+        animator.SetBool("Running", input.magnitude > 0.1f);
+
         float mag = input.magnitude;
         if (mag > 1f) input /= mag;
 
         Vector3 moveDelta = input * moveSpeed * Time.fixedDeltaTime;
-
-        // Let Rigidbody and colliders handle all collisions
         rb.MovePosition(rb.position + moveDelta);
 
-        // Rotation
+        // Smooth rotation
         if (input.sqrMagnitude > 0.001f)
         {
             Quaternion targetRot = Quaternion.LookRotation(input, Vector3.up);
-            rb.MoveRotation(Quaternion.RotateTowards(
-                rb.rotation,
-                targetRot,
-                rotationSpeed * Time.fixedDeltaTime
-            ));
+
+            // rotationSpeed is a factor 0..infinity, so we map it to a 0..1 lerp value per physics tick
+            float t = rotationSpeed * Time.fixedDeltaTime;
+            t = Mathf.Clamp01(t);
+
+            Quaternion smoothRot = Quaternion.Slerp(rb.rotation, targetRot, t);
+            rb.MoveRotation(smoothRot);
         }
     }
 }

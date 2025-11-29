@@ -130,7 +130,7 @@ MonoBehaviour:
   damage: 0
   hitEffect: {fileID: 6744127768302982459, guid: 8dd52e5e9126e754eb7c7906591d7865, type: 3}
   revertsTime: 1
-  revertTimeTime: 0.3
+  revertTimeTime: 2
   isArea: 1
   blastRadius: 3
 --- !u!54 &-2651262360132210826
