@@ -1,79 +1,90 @@
 using UnityEngine;
 using UnityEngine.AI;
-using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.InputSystem;
+using System.Collections;
 
 public class Enemies : MonoBehaviour
 {
     private Transform core;
     private NavMeshPath path;
-    Queue<Vector3> points;
-    Stack<Vector3> usedPoints;
+    List<Vector3> points;
+    public int index = 0;
     Vector3 targetPoint;
 
     [SerializeField] private float speed = 5f;
     [SerializeField] private float revertModifier = 2f;
-    float minDelta = 0.1f;
-    float distanceFromCore = 0.5f;
+    float minDelta = 0.05f;
+
+    bool moveBackward = false;
 
     void Awake()
     {
         core = GameObject.FindGameObjectWithTag("Core").transform;
         path = new NavMeshPath();
         NavMesh.CalculatePath(transform.position, core.position, NavMesh.AllAreas, path);
-        points = new Queue<Vector3>(path.corners);
+        points = new List<Vector3>(path.corners);
         targetPoint = transform.position;
     }
 
     void Update()
     {
-        if (Input.GetKeyDown("R"))
+        Keyboard keyboard = Keyboard.current;
+        if (keyboard.rKey.wasPressedThisFrame)
         {
-            SetPreviousPoint();
+            index--;
+            targetPoint = points[index];
         }
-        else if (Input.GetKeyUp("R"))
+            
+        else if (keyboard.rKey.wasReleasedThisFrame)
         {
-            SetNextPoint();
+            index++;
+            targetPoint = points[index];
         }
-        if (Input.GetKey("R")) MoveBackward();
-        else MoveForward();
+            
+
+        if (keyboard.rKey.isPressed)
+            MoveBackward();
+        else
+            MoveForward();
     }
 
-    private void SetNextPoint()
-    {
-        usedPoints.Push(targetPoint);
-        targetPoint = points.Dequeue();
-        targetPoint.y = transform.position.y;
-    }
+    
 
-    private void SetPreviousPoint()
-    {
-        points.Enqueue(targetPoint);
-        targetPoint = usedPoints.Pop();
-        targetPoint.y = transform.position.y;
-    }
 
     private void MoveForward()
     {
         if (Vector3.Distance(transform.position, targetPoint) <= minDelta)
         {
-            if (points.Count > 0)
+            if (index < points.Count - 1)
             {
-                SetNextPoint();               
+                index++;
+                targetPoint = points[index];
             }
         }
 
         transform.position += (targetPoint - transform.position).normalized * speed * Time.deltaTime;
+
+        for (int i = index; i < points.Count - 1; i++)
+        {
+            Debug.DrawLine(points[i], points[i + 1], Color.red);
+        }
     }
 
     private void MoveBackward()
     {
         if (Vector3.Distance(transform.position, targetPoint) <= minDelta)
         {
-            if (usedPoints.Count > 0)
+            if (index > 0)
             {
-                SetPreviousPoint();
+                index--;
+                targetPoint = points[index];
             }
+        }
+
+        for (int i = index; i > 1; i--)
+        {
+            Debug.DrawLine(points[i], points[i - 1], Color.red);
         }
 
         transform.position += (targetPoint - transform.position).normalized * speed * revertModifier * Time.deltaTime;
