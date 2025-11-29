@@ -1,19 +1,13 @@
-using System;
 using UnityEngine;
 
-public class Core : MonoBehaviour, IDamagable
+public class Core : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Enemy")
         {
-            TakeDamage(1);
+            UIManager.Instance.SubtractTime(5);
         }
     }
 
-    public void TakeDamage(float damage)
-    {
-        Debug.Log("Taking damage");
-        UIManager.Instance.SubtractTime(5);
-    }
 }

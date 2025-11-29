@@ -13,6 +13,8 @@ public class timeBar : MonoBehaviour
     public RectTransform hourglass;
     public TMP_Text displayedTime;
     public TMP_Text displayedSubtractTime;
+    public static event System.Action OnTimeDepleted;
+
 
     float _time;
     float _interval = 1;
@@ -53,9 +55,17 @@ public class timeBar : MonoBehaviour
 
     public void SetTimePercentUI(float percent)
     {
-        timeLeft = percent * timeMax; //???????????
+        timeLeft = percent * timeMax;
+
         bar.DOFillAmount(timeLeft / timeMax, .3f).SetEase(Ease.Linear);
+
+        if (timeLeft <= 0f)
+        {
+            timeLeft = 0f;
+            OnTimeDepleted?.Invoke();
+        }
     }
+
 
     public void FlipHourglass(bool back)
     {

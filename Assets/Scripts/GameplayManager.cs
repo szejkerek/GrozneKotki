@@ -37,14 +37,21 @@ public class GameplayManager : MonoBehaviour
         
         input.Player.Restart.performed += OnRestart;
         input.Player.MainMenu.performed += OnMainMenu;
+        timeBar.OnTimeDepleted += HandleLostTime;
     }
-    
+
+    private void HandleLostTime()
+    {
+        RestartLevel();
+    }
+
     void OnDisable()
     {
         input.Disable();
         
         input.Player.Restart.performed -= OnRestart;
         input.Player.MainMenu.performed -= OnMainMenu;
+        timeBar.OnTimeDepleted -= HandleLostTime;
     }
 
     private void OnMainMenu(InputAction.CallbackContext obj)
