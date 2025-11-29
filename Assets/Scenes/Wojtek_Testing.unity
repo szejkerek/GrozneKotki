@@ -9793,7 +9793,6 @@ GameObject:
   - component: {fileID: 1815593948}
   - component: {fileID: 1815593951}
   - component: {fileID: 1815593952}
-  - component: {fileID: 1815593953}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -9860,21 +9859,25 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!4 &1815593950
-Transform:
+--- !u!224 &1815593950
+RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1815593947}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0.6432927, y: -0, z: -0, w: 0.7656203}
-  m_LocalPosition: {x: 0, y: 13.05, z: -10}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 80.076, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 960, y: 540}
+  m_SizeDelta: {x: 1920, y: 1080}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1815593951
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9931,23 +9934,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a457dc857c5b25445ae727ed86e004e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameplayManager
---- !u!114 &1815593953
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1815593947}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.Postprocessing.Runtime::UnityEngine.Rendering.PostProcessing.PostProcessVolume
-  sharedProfile: {fileID: 11400000, guid: 9e2b7d6fd91f2c349a029d1fa24eb9c8, type: 2}
-  isGlobal: 1
-  blendDistance: 0
-  weight: 1
-  priority: 0
 --- !u!4 &1822612195 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7668656312418484563, guid: c150978f6bc90f745b11a437647f6112, type: 3}
@@ -11764,7 +11750,6 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 1815593950}
   - {fileID: 692625406}
   - {fileID: 1784211330}
   - {fileID: 1638966309}
@@ -11793,3 +11778,4 @@ SceneRoots:
   - {fileID: 348917523}
   - {fileID: 704251548}
   - {fileID: 686104594}
+  - {fileID: 1815593950}

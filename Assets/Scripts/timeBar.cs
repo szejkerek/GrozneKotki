@@ -28,16 +28,13 @@ public class timeBar : MonoBehaviour
         
         var keyboard = Keyboard.current;
 
-        if (keyboard.iKey.wasPressedThisFrame)
+        if (keyboard.tKey.wasPressedThisFrame)
             SubtractTimeUI(3, true);
-        displayedTime.text = timeLeft + "s";
-
-
 
         _time += Time.deltaTime;
         while (_time >= _interval)
         {
-            SubtractTimeUI(1, false);
+            SubtractTimeUI(_interval, false);
             _time -= _interval;
         }
 
@@ -51,6 +48,7 @@ public class timeBar : MonoBehaviour
 
     public void SubtractTimeUI(float amount, bool byEnemy)
     {
+        displayedTime.text = Mathf.Round(timeLeft * 1.0f) + "s";
         FlipHourglass(true);
         SetTimePercentUI(Math.Clamp(timeLeft - amount, 0, timeMax)/timeMax);
         if (byEnemy)
