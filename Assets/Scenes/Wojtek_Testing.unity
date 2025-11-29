@@ -545,6 +545,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a457dc857c5b25445ae727ed86e004e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameplayManager
+  mainCamera: {fileID: 0}
+  player: {fileID: 0}
 --- !u!4 &275546709
 Transform:
   m_ObjectHideFlags: 0
