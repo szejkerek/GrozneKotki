@@ -5,7 +5,7 @@ public class FireballProjectile : MonoBehaviour
 {
     public float speed = 15f;
     public float lifeTime = 3f;
-    public float damage = 10f;
+    public float damage = 40f;
     public GameObject hitEffect;
 
     Vector3 direction;
@@ -39,6 +39,11 @@ public class FireballProjectile : MonoBehaviour
         if (hitEffect != null)
         {
             Instantiate(hitEffect, transform.position, Quaternion.identity);
+        }
+
+        if(other.GetComponent<IDamagable>() != null)
+        {
+            other.GetComponent<IDamagable>().TakeDamage(damage);
         }
 
         Destroy(gameObject);
