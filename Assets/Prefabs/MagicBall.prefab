@@ -124,7 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21a4b9ed91264861b98f54a457b1b234, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FireballProjectile
-  speed: 15
+  speed: 20
   lifeTime: 3
-  damage: 10
+  damage: 50
   hitEffect: {fileID: 0}
