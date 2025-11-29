@@ -9,15 +9,6 @@ public class PlayerControllerInputSystem : MonoBehaviour
     public float moveSpeed = 5f;
     public float rotationSpeed = 720f;
 
-    [Header("Ground")]
-    public LayerMask groundMask;
-    public float groundCheckAbove = 2f;
-    public float groundCheckExtra = 2f;
-
-    [Header("Collision")]
-    public LayerMask wallMask; // walls layer
-    public float skinWidth = 0.05f; // small offset to prevent penetration
-
     private InputMap inputActions;
     private CapsuleCollider capsule;
     private Rigidbody rb;
@@ -28,9 +19,9 @@ public class PlayerControllerInputSystem : MonoBehaviour
         capsule = GetComponent<CapsuleCollider>();
         rb = GetComponent<Rigidbody>();
 
-        rb.useGravity = true;
-        rb.isKinematic = false; // dynamic for collisions
-        rb.constraints = RigidbodyConstraints.FreezeRotation; // prevent physics rotation
+        rb.useGravity = true;                 // Rigidbody gravity
+        rb.isKinematic = false;               // dynamic rigidbody for collisions
+        rb.constraints = RigidbodyConstraints.FreezeRotation;
     }
 
     void OnEnable() => inputActions.Enable();
@@ -39,7 +30,6 @@ public class PlayerControllerInputSystem : MonoBehaviour
     void FixedUpdate()
     {
         HandleMovement();
-        SnapToGround();
     }
 
     private void HandleMovement()
@@ -52,31 +42,10 @@ public class PlayerControllerInputSystem : MonoBehaviour
 
         Vector3 moveDelta = input * moveSpeed * Time.fixedDeltaTime;
 
-        // --- Custom collision handling for triggers/walls ---
-        if (wallMask != 0)
-        {
-            Vector3 capsuleBottom = transform.position + capsule.center - Vector3.up * capsule.height * 0.5f;
-            Vector3 capsuleTop = capsuleBottom + Vector3.up * capsule.height;
-
-            Collider[] hits = Physics.OverlapCapsule(
-                capsuleBottom + moveDelta,
-                capsuleTop + moveDelta,
-                capsule.radius,
-                wallMask,
-                QueryTriggerInteraction.Collide
-            );
-
-            foreach (Collider hit in hits)
-            {
-                Vector3 closest = hit.ClosestPoint(transform.position);
-                Vector3 pushDir = (transform.position - closest).normalized;
-                moveDelta += pushDir * skinWidth;
-            }
-        }
-
+        // Let Rigidbody and colliders handle all collisions
         rb.MovePosition(rb.position + moveDelta);
 
-        // --- Rotation ---
+        // Rotation
         if (input.sqrMagnitude > 0.001f)
         {
             Quaternion targetRot = Quaternion.LookRotation(input, Vector3.up);
@@ -85,30 +54,6 @@ public class PlayerControllerInputSystem : MonoBehaviour
                 targetRot,
                 rotationSpeed * Time.fixedDeltaTime
             ));
-        }
-    }
-
-    private void SnapToGround()
-    {
-        Bounds bounds = capsule.bounds;
-        Vector3 origin = new Vector3(bounds.center.x, bounds.max.y + groundCheckAbove, bounds.center.z);
-        float rayLength = groundCheckAbove + groundCheckExtra + bounds.extents.y;
-
-        Debug.DrawRay(origin, Vector3.down * rayLength, Color.red);
-
-        if (Physics.Raycast(
-            origin,
-            Vector3.down,
-            out RaycastHit hit,
-            rayLength,
-            groundMask,
-            QueryTriggerInteraction.Ignore
-        ))
-        {
-            float bottomToGround = hit.point.y - bounds.min.y;
-            Vector3 pos = rb.position;
-            pos.y += bottomToGround;
-            rb.MovePosition(pos);
         }
     }
 }

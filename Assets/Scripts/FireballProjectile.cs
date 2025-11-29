@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
+[RequireComponent(typeof(Rigidbody))]
 public class FireballProjectile : MonoBehaviour
 {
     public float speed = 15f;
@@ -18,6 +19,15 @@ public class FireballProjectile : MonoBehaviour
     Vector3 direction;
     bool launched;
 
+    Rigidbody rb;
+
+    void Awake()
+    {
+        rb = GetComponent<Rigidbody>();
+        rb.useGravity = false;  
+        rb.isKinematic = false;  
+    }
+
     public void Launch(Vector3 dir, float overrideSpeed = 0f)
     {
         direction = dir.normalized;
@@ -25,7 +35,7 @@ public class FireballProjectile : MonoBehaviour
             speed = overrideSpeed;
 
         launched = true;
-        
+
         Destroy(gameObject, lifeTime);
     }
 
@@ -34,7 +44,8 @@ public class FireballProjectile : MonoBehaviour
         if (!launched)
             return;
 
-        transform.position += direction * speed * Time.deltaTime;
+        Vector3 newPos = rb.position + direction * speed * Time.deltaTime;
+        rb.MovePosition(newPos);
     }
 
     void OnTriggerEnter(Collider other)
@@ -48,10 +59,8 @@ public class FireballProjectile : MonoBehaviour
             Instantiate(hitEffect, transform.position, Quaternion.identity);
         }
 
-        if(isArea)
+        if (isArea)
         {
-            List<IDamagable> result = new List<IDamagable>();
-
             Collider[] colliders = Physics.OverlapSphere(transform.position, blastRadius);
 
             foreach (Collider col in colliders)
@@ -67,28 +76,28 @@ public class FireballProjectile : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    void OnCollisionEnter(Collision collision)
     {
         if (hitEffect != null)
         {
             Instantiate(hitEffect, transform.position, Quaternion.identity);
         }
+
         Destroy(gameObject);
     }
 
-    private void ApplyEffects(Collider other)
+    void ApplyEffects(Collider other)
     {
-        if (other.GetComponent<IDamagable>() != null)
+        IDamagable damagable = other.GetComponent<IDamagable>();
+        if (damagable != null)
         {
-            other.GetComponent<IDamagable>().TakeDamage(damage);
+            damagable.TakeDamage(damage);
         }
 
-        if (other.GetComponent<Enemy>() != null)
+        Enemy enemy = other.GetComponent<Enemy>();
+        if (enemy != null && revertsTime)
         {
-            if (revertsTime)
-            {
-                other.GetComponent<Enemy>().RevertTime(revertTimeTime);
-            }
+            enemy.RevertTime(revertTimeTime);
         }
     }
 }
