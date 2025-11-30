@@ -133,16 +133,13 @@ public class Enemy : MonoBehaviour, IDamagable
 
         for (int i = 1; i < points.Count - 1; i++)
         {
-            // random 2D offset
             Vector2 offset = Random.insideUnitCircle * cornerJitterRadius;
             Vector3 jittered = points[i] + new Vector3(offset.x, 0f, offset.y);
 
-            // snap back to navmesh
             if (TryProjectToNavMesh(jittered, cornerJitterRadius * 2f, out Vector3 snapped))
             {
                 points[i] = snapped;
             }
-            // else keep the original corner (do nothing)
         }
     }
 
