@@ -321,8 +321,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameplayManager
   staringTime: 60
-  mainCamera: {fileID: 0}
-  TimeBar: {fileID: 0}
+  mainCamera: {fileID: 5312442404380472299}
+  TimeBar: {fileID: 8662610862880908924}
 --- !u!1 &4167981516340216465
 GameObject:
   m_ObjectHideFlags: 0
@@ -5680,11 +5680,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5348760046745552071, guid: 7ba7f9a2240aa55459804f9d03aa7449, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -6.999969
+      value: -6.9999695
       objectReference: {fileID: 0}
     - target: {fileID: 5348760046745552071, guid: 7ba7f9a2240aa55459804f9d03aa7449, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -6
+      value: -5.9999847
       objectReference: {fileID: 0}
     - target: {fileID: 7284721407125177565, guid: 7ba7f9a2240aa55459804f9d03aa7449, type: 3}
       propertyPath: m_AnchorMax.y
@@ -5789,6 +5789,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ba79bef3abdde64485d422a9da9ab18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+--- !u!114 &8662610862880908924 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5833460770799595477, guid: 7ba7f9a2240aa55459804f9d03aa7449, type: 3}
+  m_PrefabInstance: {fileID: 2937291467931732393}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa8ccecde64028a44842a1c9f9730ae4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1001 &3037638060523926745
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5800,7 +5811,7 @@ PrefabInstance:
     - target: {fileID: 3436483896645947944, guid: 371e8a99d3c36564b926fa9e6828d24e, type: 3}
       propertyPath: cooldownUI
       value: 
-      objectReference: {fileID: 3997412457210121326}
+      objectReference: {fileID: 1909016695646923231}
     - target: {fileID: 3442490847355091203, guid: 371e8a99d3c36564b926fa9e6828d24e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -27.6162
@@ -5856,7 +5867,7 @@ PrefabInstance:
     - target: {fileID: 8182583811974516920, guid: 371e8a99d3c36564b926fa9e6828d24e, type: 3}
       propertyPath: cooldownUI
       value: 
-      objectReference: {fileID: 1909016695646923231}
+      objectReference: {fileID: 3997412457210121326}
     - target: {fileID: 8857796681995623189, guid: 371e8a99d3c36564b926fa9e6828d24e, type: 3}
       propertyPath: m_Name
       value: Player
@@ -5933,6 +5944,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3835837057653872154, guid: a8692a9a8b44df24f82e2d685035f238, type: 3}
   m_PrefabInstance: {fileID: 4138275777402387763}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5312442404380472299 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8131123631435402968, guid: a8692a9a8b44df24f82e2d685035f238, type: 3}
+  m_PrefabInstance: {fileID: 4138275777402387763}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91f2ca35adac6cc4ab8dabc7bd73dfc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MainCamera
 --- !u!1001 &5351058410637375528
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5941,6 +5963,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6839082207747706880}
     m_Modifications:
+    - target: {fileID: 4606615074838298490, guid: 01d1c3d8598bab1488d361e6e60c7d89, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: fb6c86955dff3da4489ab7cb9f9ecebf, type: 2}
     - target: {fileID: 5666108580707437723, guid: 01d1c3d8598bab1488d361e6e60c7d89, type: 3}
       propertyPath: m_Name
       value: CORE

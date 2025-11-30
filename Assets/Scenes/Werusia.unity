@@ -4927,6 +4927,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 52e9ddec5909ab147b4c3e3a30730538, type: 3}
   m_PrefabInstance: {fileID: 127041625}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &127797714 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8662610862880908924, guid: 79219686db3cc194aa653710b7ac0085, type: 3}
+  m_PrefabInstance: {fileID: 531813282}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa8ccecde64028a44842a1c9f9730ae4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1001 &127929628
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18402,6 +18413,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 402804286826915569, guid: 79219686db3cc194aa653710b7ac0085, type: 3}
+      propertyPath: cooldownUI
+      value: 
+      objectReference: {fileID: 764989151}
     - target: {fileID: 3060068016067656012, guid: 79219686db3cc194aa653710b7ac0085, type: 3}
       propertyPath: m_Name
       value: GameplayManager
@@ -18466,6 +18481,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6605016106306790497, guid: 79219686db3cc194aa653710b7ac0085, type: 3}
+      propertyPath: cooldownUI
+      value: 
+      objectReference: {fileID: 1866982308}
     - target: {fileID: 6839082207747706880, guid: 79219686db3cc194aa653710b7ac0085, type: 3}
       propertyPath: m_LocalPosition.x
       value: 11.949153
@@ -18518,6 +18537,14 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: fb6c86955dff3da4489ab7cb9f9ecebf, type: 2}
+    - target: {fileID: 8701962499492227012, guid: 79219686db3cc194aa653710b7ac0085, type: 3}
+      propertyPath: TimeBar
+      value: 
+      objectReference: {fileID: 127797714}
+    - target: {fileID: 8701962499492227012, guid: 79219686db3cc194aa653710b7ac0085, type: 3}
+      propertyPath: mainCamera
+      value: 
+      objectReference: {fileID: 2131998746}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -28024,6 +28051,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 5052f3e19152cba45a45f528cd0a9120, type: 3}
   m_PrefabInstance: {fileID: 763774800}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &764989151 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1909016695646923231, guid: 79219686db3cc194aa653710b7ac0085, type: 3}
+  m_PrefabInstance: {fileID: 531813282}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ba79bef3abdde64485d422a9da9ab18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1 &765509611
 GameObject:
   m_ObjectHideFlags: 0
@@ -64887,6 +64925,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1883278976}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1866982308 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3997412457210121326, guid: 79219686db3cc194aa653710b7ac0085, type: 3}
+  m_PrefabInstance: {fileID: 531813282}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ba79bef3abdde64485d422a9da9ab18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1 &1868245678
 GameObject:
   m_ObjectHideFlags: 0
@@ -74014,6 +74063,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 920764564}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2131998746 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5312442404380472299, guid: 79219686db3cc194aa653710b7ac0085, type: 3}
+  m_PrefabInstance: {fileID: 531813282}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91f2ca35adac6cc4ab8dabc7bd73dfc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MainCamera
 --- !u!1001 &2132981367
 PrefabInstance:
   m_ObjectHideFlags: 0
