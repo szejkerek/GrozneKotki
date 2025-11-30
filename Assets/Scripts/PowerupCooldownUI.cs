@@ -34,7 +34,7 @@ public class PowerupCooldownUI : MonoBehaviour
             PowerupUsedUI(3);
 
         _time += Time.deltaTime;
-        while (_time >= _interval)
+        while (_time >= _interval && timeLeft<1)
         {
             AddTimeUI(.1f);
             _time -= _interval;
@@ -49,6 +49,7 @@ public class PowerupCooldownUI : MonoBehaviour
         {
             bar.DOColor(color, 0.3f);
             icon.DOColor(color, 0.3f);
+            ShowWithPunch();
         }
     }
 
@@ -65,27 +66,23 @@ public class PowerupCooldownUI : MonoBehaviour
     public void SetTimePercentUI(float percent)
     {
         timeLeft = percent;
-        bar.DOFillAmount(timeLeft / 1, .3f).SetEase(Ease.Linear);
+        bar.DOFillAmount(timeLeft / 1, .1f).SetEase(Ease.Linear);
+        icon.DOFillAmount(timeLeft / 1, .1f).SetEase(Ease.Linear);
     }
 
 
-    public void ShowWithPunch(TMP_Text text)
+    public void ShowWithPunch()
     {
-        text.gameObject.SetActive(true);
-        //text.alpha = 1f;
-        text.transform.localScale = Vector3.one;
-
         // Punch
-        text.transform.DOPunchScale(
+        this.transform.DOPunchScale(
             punch: new Vector3(0.3f, 0.3f, 0f),
             duration: 0.4f,
             vibrato: 10
         );
-
-        DOVirtual.DelayedCall(1.5f, () =>
-        {
-            text.DOFade(0f, 0.3f)
-                    .OnComplete(() => text.gameObject.SetActive(false));
-        });
+        //bar.transform.DOPunchScale(
+        //    punch: new Vector3(0.3f, 0.3f, 0f),
+        //    duration: 0.4f,
+        //    vibrato: 10
+        //);
     }
 }
