@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6514459441323419129}
   - component: {fileID: 8131123631435402968}
   - component: {fileID: 2746458882139091610}
+  - component: {fileID: 1880884492900029074}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -29,13 +30,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5642491388620682234}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.66955256, y: -0.2650753, z: 0.27946168, w: -0.6350871}
+  m_LocalRotation: {x: 0.66955465, y: 0.2650752, z: -0.27946344, w: 0.63508415}
   m_LocalPosition: {x: -8.556002, y: 36.588646, z: -12.368095}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 93.02701, y: 45.311005, z: 0.0010070801}
 --- !u!20 &3029825958268050544
 Camera:
   m_ObjectHideFlags: 0
@@ -118,7 +119,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -167,3 +168,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b248a1375b5bd546b8f67c8dcfb24b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraShake
+--- !u!114 &1880884492900029074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5642491388620682234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.Volume
+  m_IsGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: 9672b2e52a1f44845bd1cf0d1a207aed, type: 2}

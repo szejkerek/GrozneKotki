@@ -18,6 +18,8 @@ public class Player : MonoBehaviour
     void Awake()
     {
         inputActions = new InputMap();
+        
+        transform.SetParent(null);
     }
 
     void Start()

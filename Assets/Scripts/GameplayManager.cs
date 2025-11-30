@@ -11,7 +11,7 @@ public class GameplayManager : MonoBehaviour
     [SerializeField] private int staringTime = 60;
     
     [SerializeField] public MainCamera mainCamera;
-    [SerializeField] GameObject player;
+    [SerializeField] Player player;
     public TimeBar TimeBar;
 
     void Awake()
@@ -23,7 +23,8 @@ public class GameplayManager : MonoBehaviour
         }
 
         Instance = this;
-
+        mainCamera = FindObjectOfType<MainCamera>();
+        player = FindObjectOfType<Player>();
         input = new InputMap();
         mainCamera.Initialize(player.transform);
         TimeBar.timeMax =  staringTime;
