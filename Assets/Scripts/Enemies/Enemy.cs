@@ -4,6 +4,8 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour, IDamagable
 {
+    public static event System.Action OnEnemyKilled;
+    
     private Transform core;
     private NavMeshPath path;
     private List<Vector3> points;
@@ -273,5 +275,11 @@ public class Enemy : MonoBehaviour, IDamagable
     {
         health -= damage;
         if(health < 0) Destroy(gameObject);
+    }
+
+    public void Kill()
+    {
+        OnEnemyKilled?.Invoke();
+        Destroy(gameObject);
     }
 }

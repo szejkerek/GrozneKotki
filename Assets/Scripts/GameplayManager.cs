@@ -7,9 +7,12 @@ public class GameplayManager : MonoBehaviour
     public static GameplayManager Instance { get; private set; }
 
     InputMap input;
+
+    [SerializeField] private int staringTime = 60;
     
     [SerializeField] MainCamera mainCamera;
     [SerializeField] GameObject player;
+    public TimeBar TimeBar;
 
     void Awake()
     {
@@ -23,7 +26,7 @@ public class GameplayManager : MonoBehaviour
 
         input = new InputMap();
         mainCamera.Initialize(player.transform);
-        
+        TimeBar.timeMax =  staringTime;
     }
 
     private void Start()
@@ -37,7 +40,7 @@ public class GameplayManager : MonoBehaviour
         
         input.Player.Restart.performed += OnRestart;
         input.Player.MainMenu.performed += OnMainMenu;
-        timeBar.OnTimeDepleted += HandleLostTime;
+        TimeBar.OnTimeDepleted += HandleLostTime;
     }
 
     private void HandleLostTime()
@@ -51,7 +54,7 @@ public class GameplayManager : MonoBehaviour
         
         input.Player.Restart.performed -= OnRestart;
         input.Player.MainMenu.performed -= OnMainMenu;
-        timeBar.OnTimeDepleted -= HandleLostTime;
+        TimeBar.OnTimeDepleted -= HandleLostTime;
     }
 
     private void OnMainMenu(InputAction.CallbackContext obj)
