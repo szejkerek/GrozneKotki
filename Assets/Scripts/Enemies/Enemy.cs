@@ -25,6 +25,8 @@ public class Enemy : MonoBehaviour, IDamagable
     [SerializeField] private float rewindPlaybackDuration = 1f;
     [SerializeField] private float cornerJitterRadius = 0.05f;
 
+    private bool isDead = false;
+
     private Rigidbody rb;
     private Animator animator;
 
@@ -167,6 +169,8 @@ public class Enemy : MonoBehaviour, IDamagable
 
     private void MoveAlongPath()
     {
+        if (isDead) return;
+
         if (points == null || points.Length == 0)
             return;
 
@@ -222,6 +226,8 @@ public class Enemy : MonoBehaviour, IDamagable
 
     private void RewindStep()
     {
+        if (isDead) return;
+
         if (statesToRewindLeft <= 0 || historyCount == 0)
         {
             FinishRewind();
@@ -284,6 +290,8 @@ public class Enemy : MonoBehaviour, IDamagable
         if (historyCount <= 1 || rewindAmountSeconds <= 0f)
             return;
 
+
+
         int availableStates = historyCount;
         float stepDuration = recordInterval > 0f ? recordInterval : Time.fixedDeltaTime;
         int desiredStates = Mathf.RoundToInt(rewindAmountSeconds / stepDuration);
@@ -320,6 +328,8 @@ public class Enemy : MonoBehaviour, IDamagable
     public void Kill()
     {
         OnEnemyKilled?.Invoke();
-        Destroy(gameObject);
+        animator.SetBool("Attack", true);
+        isDead = true;
+        //Destroy(gameObject);
     }
 }
