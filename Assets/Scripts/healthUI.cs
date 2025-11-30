@@ -17,7 +17,6 @@ public class healthUI : MonoBehaviour
     public void Start()
     {
         initialTransform = this.transform.position;
-        Debug.Log(initialTransform);
         this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y-500, this.transform.position.z);
     }
 
