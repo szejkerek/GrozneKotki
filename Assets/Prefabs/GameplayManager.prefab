@@ -486,7 +486,7 @@ Transform:
   m_GameObject: {fileID: 5586185367765135800}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 40.4, y: 0, z: -10.099996}
+  m_LocalPosition: {x: 31.17, y: -0, z: -11.28}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5367,7 +5367,7 @@ Transform:
   m_GameObject: {fileID: 6551547971947926805}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 17.7, y: 0, z: -33}
+  m_LocalPosition: {x: 13.44, y: -0, z: -32.21}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5453,9 +5453,12 @@ MonoBehaviour:
   seed: 12345
   spawnRadius: 6.49
   enemyPrefab: {fileID: 7229312122015182329, guid: c150978f6bc90f745b11a437647f6112, type: 3}
-  firstBossPrefab: {fileID: 0}
-  firstBossSpawnPoint: {fileID: 0}
+  fastEnemyPrefab: {fileID: 8365577457458269348, guid: 29015e66213d7b94088a78901d75276d, type: 3}
+  firstBossPrefab: {fileID: 8757501136881193490, guid: fda2a39e6456dbb45b373004f2c60b12, type: 3}
+  firstBossSpawnPoint: {fileID: 3590316127442783959}
   firstBossKillThreshold: 25
+  fastEnemyInterval: 5
+  fastEnemyStartKills: 3
 --- !u!1 &7580212916952242017
 GameObject:
   m_ObjectHideFlags: 0
@@ -5482,7 +5485,7 @@ Transform:
   m_GameObject: {fileID: 7580212916952242017}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.2, y: 0, z: -33.6}
+  m_LocalPosition: {x: 6.56, y: -0, z: -32.22}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5527,7 +5530,7 @@ Transform:
   m_GameObject: {fileID: 8066693658513464445}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.07, y: 0, z: -29.99}
+  m_LocalPosition: {x: -10.52, y: 0, z: -17.75}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5572,7 +5575,7 @@ Transform:
   m_GameObject: {fileID: 9045984034903052546}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 35.3, y: 0, z: -23.1}
+  m_LocalPosition: {x: 32.96, y: -0, z: -15.56}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

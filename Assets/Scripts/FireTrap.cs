@@ -29,16 +29,7 @@ public class FireTrap : MonoBehaviour
             {
                 float frameDamage = damage * Time.deltaTime;
                 damagable.TakeDamage(frameDamage);
-
-#if UNITY_EDITOR
-                if (debugDamage)
-                {
-                    Debug.Log(
-                        $"[FireTrap] {name} dealt {frameDamage:F2} damage to {col.name}",
-                        this
-                    );
-                }
-#endif
+                
             }
         }
     }
