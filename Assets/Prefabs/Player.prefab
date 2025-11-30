@@ -338,7 +338,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efc3cdcd69564e69ad73b377ad001212, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GhostRecorder
-  sampleInterval: 0.02
+  sampleInterval: 0.05
 --- !u!114 &8182583811974516920
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -407,6 +407,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   hitCooldown: 0.5
+  knockbackForce: 5
+  knockbackUpward: 0.5
 --- !u!1001 &65354594585225827
 PrefabInstance:
   m_ObjectHideFlags: 0
