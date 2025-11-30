@@ -70,7 +70,16 @@ public class PlayerControllerInputSystem : MonoBehaviour
 
         if (camTransform != null)
         {
+            // start with camera forward
             camForward = camTransform.forward;
+
+            // if camera is very top down, forward is almost vertical
+            // in that case use camera.up as "screen up"
+            if (Mathf.Abs(camForward.y) > 0.5f)
+            {
+                camForward = camTransform.up;
+            }
+
             camForward.y = 0f;
             camForward.Normalize();
 
@@ -80,10 +89,9 @@ public class PlayerControllerInputSystem : MonoBehaviour
         }
 
         // movement direction in world space based on camera
-        // up on stick means camera forward
+        // up on stick means up on the screen
         Vector3 moveDir = camForward * moveInput.y + camRight * moveInput.x;
 
-        // running animation based on movement, not aiming
         animator.SetBool("Running", moveDir.magnitude > 0.1f);
 
         float mag = moveDir.magnitude;
@@ -110,4 +118,5 @@ public class PlayerControllerInputSystem : MonoBehaviour
             rb.MoveRotation(smoothRot);
         }
     }
+
 }
