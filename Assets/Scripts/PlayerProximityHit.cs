@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerProximityHit : MonoBehaviour
@@ -11,6 +12,8 @@ public class PlayerProximityHit : MonoBehaviour
     public LayerMask enemyLayer;
     public float hitCooldown = 0.5f;
 
+    public int maxColliders = 8;
+
     [Header("Knockback")]
     public float knockbackForce = 5f;
     public float knockbackUpward = 0.5f;
@@ -22,18 +25,27 @@ public class PlayerProximityHit : MonoBehaviour
 
     Rigidbody rb;
 
+    Collider[] overlapResults;
+
+    WaitForSeconds flashWait;
+
     void Awake()
     {
-        // all renderers on player and children
         renderers = GetComponentsInChildren<Renderer>();
         originalColors = new Color[renderers.Length];
 
         for (int i = 0; i < renderers.Length; i++)
         {
-            originalColors[i] = renderers[i].material.color;
+            if (renderers[i] != null && renderers[i].material != null)
+            {
+                originalColors[i] = renderers[i].material.color;
+            }
         }
 
         rb = GetComponent<Rigidbody>();
+
+        overlapResults = new Collider[maxColliders];
+        flashWait = new WaitForSeconds(flashTime);
     }
 
     void Update()
@@ -51,9 +63,14 @@ public class PlayerProximityHit : MonoBehaviour
 
     Transform GetClosestEnemy()
     {
-        Collider[] hits = Physics.OverlapSphere(transform.position, detectionRadius, enemyLayer);
+        int count = Physics.OverlapSphereNonAlloc(
+            transform.position,
+            detectionRadius,
+            overlapResults,
+            enemyLayer
+        );
 
-        if (hits.Length == 0)
+        if (count == 0)
             return null;
 
         float closestSqr = Mathf.Infinity;
@@ -61,8 +78,12 @@ public class PlayerProximityHit : MonoBehaviour
 
         Vector3 currentPos = transform.position;
 
-        foreach (Collider c in hits)
+        for (int i = 0; i < count; i++)
         {
+            Collider c = overlapResults[i];
+            if (c == null)
+                continue;
+
             Vector3 dir = c.transform.position - currentPos;
             float sqr = dir.sqrMagnitude;
 
@@ -78,12 +99,10 @@ public class PlayerProximityHit : MonoBehaviour
 
     public void OnHit(Transform enemy)
     {
-        // knockback first
         if (rb != null && enemy != null)
         {
             Vector3 direction = (transform.position - enemy.position).normalized;
 
-            // optional  top down knockback, no vertical tilt
             direction.y = 0f;
             direction.Normalize();
 
@@ -93,29 +112,34 @@ public class PlayerProximityHit : MonoBehaviour
 
         GameplayManager.Instance.TimeBar.SubtractTimeUI(10, byEnemy: false);
 
-
-        if (!isFlashing)
+        if (!isFlashing && gameObject.activeInHierarchy)
         {
             StartCoroutine(Flash());
         }
     }
 
-    System.Collections.IEnumerator Flash()
+    IEnumerator Flash()
     {
         isFlashing = true;
 
         for (int i = 0; i < renderers.Length; i++)
         {
-            if (renderers[i] != null)
-                renderers[i].material.color = hitColor;
+            Renderer r = renderers[i];
+            if (r == null || r.material == null)
+                continue;
+
+            r.material.color = hitColor;
         }
 
-        yield return new WaitForSeconds(flashTime);
+        yield return flashWait;
 
         for (int i = 0; i < renderers.Length; i++)
         {
-            if (renderers[i] != null)
-                renderers[i].material.color = originalColors[i];
+            Renderer r = renderers[i];
+            if (r == null || r.material == null)
+                continue;
+
+            r.material.color = originalColors[i];
         }
 
         isFlashing = false;

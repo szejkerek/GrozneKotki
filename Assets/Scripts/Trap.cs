@@ -10,20 +10,18 @@ public class Trap : MonoBehaviour
     public float blastRadius = 3f;
     public GameObject hitEffect;
 
-    bool activated = false;
+    bool activated;
 
-    public void Awake()
+    void Awake()
     {
         StartCoroutine(ExplodeAfterSeconds(lifeTime));
     }
 
-    private IEnumerator ExplodeAfterSeconds(float time)
+    IEnumerator ExplodeAfterSeconds(float time)
     {
         yield return new WaitForSeconds(time);
         BlowUp();
-        Destroy(gameObject);
     }
-
 
     void OnTriggerEnter(Collider other)
     {
@@ -31,20 +29,18 @@ public class Trap : MonoBehaviour
         //    other.attachedRigidbody.transform == transform.root)
         //    return;
 
-        //BlowUp();
-        //activated = true;
-        //Destroy(gameObject);
+        BlowUp();
     }
 
-    private void BlowUp()
+    void BlowUp()
     {
         if (activated) return;
+        activated = true;
+
         if (hitEffect != null)
         {
             Instantiate(hitEffect, transform.position, Quaternion.identity);
         }
-
-        List<IDamagable> result = new List<IDamagable>();
 
         Collider[] colliders = Physics.OverlapSphere(transform.position, blastRadius);
 
@@ -52,12 +48,17 @@ public class Trap : MonoBehaviour
         {
             IDamagable damagable = col.GetComponent<IDamagable>();
             if (damagable != null)
+            {
                 damagable.TakeDamage(damage);
+            }
         }
+
+        Destroy(gameObject);
     }
 
-    private void OnDestroy()
+    void OnDestroy()
     {
-        BlowUp();
+        // zostaw puste albo usuń cały OnDestroy,
+        // ważne aby nie wywoływać tu BlowUp
     }
 }
