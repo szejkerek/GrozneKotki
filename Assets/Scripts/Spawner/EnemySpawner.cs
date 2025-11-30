@@ -25,6 +25,7 @@ public class EnemySpawner : MonoBehaviour
 
     [Header("References")]
     public GameObject enemyPrefab;
+    public GameObject fastEnemyPrefab;    // prefab szybkiego wroga
     List<SpawnPoint> spawnPoints = new List<SpawnPoint>();
 
     [Header("Boss settings")]
@@ -32,11 +33,16 @@ public class EnemySpawner : MonoBehaviour
     public Transform firstBossSpawnPoint;     // gdzie ma się pojawić boss
     public int firstBossKillThreshold = 25;   // po tylu zabójstwach pojawia się boss
 
+    public int fastEnemyInterval = 5;         // co tylu spawnów normalnych ma być szybki wróg
+    public int fastEnemyStartKills = 3;      // po tylu zabójstwach dopiero zacznij
+
     private float currentDelay;
     private int killedCount;
     private float timer;
     private int activeEnemies;
     private bool firstBossSpawned;
+
+    private int normalSpawnCounter;           // licznik spawnów zwykłych wrogów
 
     void Awake()
     {
@@ -119,23 +125,15 @@ public class EnemySpawner : MonoBehaviour
         return true;
     }
 
-    private void SpawnEnemyAtPoint(SpawnPoint chosen)
-    {
-        Vector3 spawnPos = chosen.transform.position;
-
-        if (spawnRadius > 0f)
-        {
-            Vector2 offset2D = Random.insideUnitCircle * spawnRadius;
-            spawnPos += new Vector3(offset2D.x, 0f, offset2D.y);
-        }
-
-        Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
-        activeEnemies++;
-    }
-
     public void EnemyKilled()
     {
         killedCount++;
+
+        // w momencie osiągnięcia progu resetujemy licznik
+        if (killedCount == fastEnemyStartKills)
+        {
+            normalSpawnCounter = 0;
+        }
 
         if (!firstBossSpawned && killedCount >= firstBossKillThreshold)
         {
@@ -148,6 +146,35 @@ public class EnemySpawner : MonoBehaviour
             if (currentDelay < minimumSpawnDelay)
                 currentDelay = minimumSpawnDelay;
         }
+    }
+
+    private void SpawnEnemyAtPoint(SpawnPoint chosen)
+    {
+        Vector3 spawnPos = chosen.transform.position;
+
+        if (spawnRadius > 0f)
+        {
+            Vector2 offset2D = Random.insideUnitCircle * spawnRadius;
+            spawnPos += new Vector3(offset2D.x, 0f, offset2D.y);
+        }
+
+        GameObject prefabToSpawn = enemyPrefab;
+
+        // szybcy wrogowie dopiero po fastEnemyStartKills
+        if (killedCount >= fastEnemyStartKills)
+        {
+            normalSpawnCounter++;
+
+            if (fastEnemyPrefab != null &&
+                fastEnemyInterval > 0 &&
+                normalSpawnCounter % fastEnemyInterval == 0)
+            {
+                prefabToSpawn = fastEnemyPrefab;
+            }
+        }
+
+        Instantiate(prefabToSpawn, spawnPos, Quaternion.identity);
+        activeEnemies++;
     }
 
     private void SpawnFirstBoss()
