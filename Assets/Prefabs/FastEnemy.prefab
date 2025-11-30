@@ -107,8 +107,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemies
   recordInterval: 0.1
-  health: 49.3
-  speed: 4
+  health: 55
+  speed: 5
   minDelta: 0.2
   maxStoredStates: 1000
   rewindPlaybackDuration: 1
