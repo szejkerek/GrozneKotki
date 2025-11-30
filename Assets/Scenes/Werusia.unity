@@ -18558,10 +18558,26 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -1
       objectReference: {fileID: 0}
+    - target: {fileID: 8336753522743164136, guid: 79219686db3cc194aa653710b7ac0085, type: 3}
+      propertyPath: initialEnemies
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 8336753522743164136, guid: 79219686db3cc194aa653710b7ac0085, type: 3}
+      propertyPath: maxEnemiesAlive
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 8336753522743164136, guid: 79219686db3cc194aa653710b7ac0085, type: 3}
+      propertyPath: desiredEnemiesAlive
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 8480061791082776402, guid: 79219686db3cc194aa653710b7ac0085, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: fb6c86955dff3da4489ab7cb9f9ecebf, type: 2}
+    - target: {fileID: 8701962499492227012, guid: 79219686db3cc194aa653710b7ac0085, type: 3}
+      propertyPath: MaxEnemy
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 9063232596389923075, guid: 79219686db3cc194aa653710b7ac0085, type: 3}
       propertyPath: m_Enabled
       value: 0
