@@ -10,7 +10,7 @@ public class MonsterCounter : MonoBehaviour
     {
         max = GameplayManager.Instance.MaxEnemy;
         Enemy.OnEnemyKilled += OnKilled;
-        text.text = $"{max-counter} time devils";
+        text.text = $"{max-counter} enemies left";
     }
 
     private void OnDisable()
@@ -21,7 +21,7 @@ public class MonsterCounter : MonoBehaviour
     private void OnKilled()
     {
         counter++;
-        text.text = $"{max-counter} time devils";
+        text.text = $"{max-counter} enemies left";
         
     }
 }
