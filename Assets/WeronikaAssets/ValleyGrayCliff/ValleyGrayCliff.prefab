@@ -11,13 +11,13 @@ GameObject:
   - component: {fileID: 2838207453471858283}
   - component: {fileID: 1210497643344646606}
   - component: {fileID: 3974561329570751748}
-  - component: {fileID: 3181940508570027216}
+  - component: {fileID: 4427685575868090170}
   m_Layer: 0
   m_Name: ValleyGrayCliff
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 125
   m_IsActive: 1
 --- !u!4 &2838207453471858283
 Transform:
@@ -90,8 +90,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &3181940508570027216
-MeshCollider:
+--- !u!136 &4427685575868090170
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -108,7 +108,8 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4625445175284749084, guid: 5052f3e19152cba45a45f528cd0a9120, type: 3}
+  serializedVersion: 2
+  m_Radius: 2.651321
+  m_Height: 7.740887
+  m_Direction: 1
+  m_Center: {x: -0.0000009536743, y: -0.0000019073486, z: 0}
