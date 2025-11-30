@@ -320,7 +320,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a457dc857c5b25445ae727ed86e004e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameplayManager
+  MaxEnemy: 250
   staringTime: 60
+  Spawner: {fileID: 8336753522743164136}
   mainCamera: {fileID: 5312442404380472299}
   TimeBar: {fileID: 8662610862880908924}
 --- !u!1 &4167981516340216465
@@ -5451,6 +5453,9 @@ MonoBehaviour:
   seed: 12345
   spawnRadius: 6.49
   enemyPrefab: {fileID: 7229312122015182329, guid: c150978f6bc90f745b11a437647f6112, type: 3}
+  firstBossPrefab: {fileID: 0}
+  firstBossSpawnPoint: {fileID: 0}
+  firstBossKillThreshold: 25
 --- !u!1 &7580212916952242017
 GameObject:
   m_ObjectHideFlags: 0
@@ -5680,11 +5685,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5348760046745552071, guid: 7ba7f9a2240aa55459804f9d03aa7449, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -6.9999695
+      value: -6.999969
       objectReference: {fileID: 0}
     - target: {fileID: 5348760046745552071, guid: 7ba7f9a2240aa55459804f9d03aa7449, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -5.9999847
+      value: -6
       objectReference: {fileID: 0}
     - target: {fileID: 7284721407125177565, guid: 7ba7f9a2240aa55459804f9d03aa7449, type: 3}
       propertyPath: m_AnchorMax.y
