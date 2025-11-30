@@ -5451,7 +5451,7 @@ MonoBehaviour:
   spawnDelayDecrease: 0.05
   minimumSpawnDelay: 0.3
   seed: 12345
-  spawnRadius: 6.49
+  spawnRadius: 4
   enemyPrefab: {fileID: 7229312122015182329, guid: c150978f6bc90f745b11a437647f6112, type: 3}
   fastEnemyPrefab: {fileID: 8365577457458269348, guid: 29015e66213d7b94088a78901d75276d, type: 3}
   firstBossPrefab: {fileID: 8757501136881193490, guid: fda2a39e6456dbb45b373004f2c60b12, type: 3}
@@ -5485,7 +5485,7 @@ Transform:
   m_GameObject: {fileID: 7580212916952242017}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.56, y: -0, z: -32.22}
+  m_LocalPosition: {x: 7.52, y: 0, z: -25.67}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5530,7 +5530,7 @@ Transform:
   m_GameObject: {fileID: 8066693658513464445}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.52, y: 0, z: -17.75}
+  m_LocalPosition: {x: -11.01, y: -0, z: -14.57}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
