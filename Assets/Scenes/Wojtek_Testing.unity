@@ -339,6 +339,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &82004063 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5642491388620682234, guid: a8692a9a8b44df24f82e2d685035f238, type: 3}
+  m_PrefabInstance: {fileID: 1047648000}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &92513248
 GameObject:
   m_ObjectHideFlags: 0
@@ -2024,12 +2029,29 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8131123631435402968, guid: a8692a9a8b44df24f82e2d685035f238, type: 3}
   m_PrefabInstance: {fileID: 1047648000}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 82004063}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 91f2ca35adac6cc4ab8dabc7bd73dfc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MainCamera
+--- !u!114 &1020622101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 82004063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.Volume
+  m_IsGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: 9672b2e52a1f44845bd1cf0d1a207aed, type: 2}
 --- !u!1001 &1047648000
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2040,15 +2062,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3835837057653872154, guid: a8692a9a8b44df24f82e2d685035f238, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -19.57382
+      value: -7.83
       objectReference: {fileID: 0}
     - target: {fileID: 3835837057653872154, guid: a8692a9a8b44df24f82e2d685035f238, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 13.78864
+      value: 23.9
       objectReference: {fileID: 0}
     - target: {fileID: 3835837057653872154, guid: a8692a9a8b44df24f82e2d685035f238, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -17.87373
+      value: -12.9
       objectReference: {fileID: 0}
     - target: {fileID: 3835837057653872154, guid: a8692a9a8b44df24f82e2d685035f238, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2082,10 +2104,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: Camera
       objectReference: {fileID: 0}
+    - target: {fileID: 6514459441323419129, guid: a8692a9a8b44df24f82e2d685035f238, type: 3}
+      propertyPath: m_RenderPostProcessing
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5642491388620682234, guid: a8692a9a8b44df24f82e2d685035f238, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1020622101}
   m_SourcePrefab: {fileID: 100100000, guid: a8692a9a8b44df24f82e2d685035f238, type: 3}
 --- !u!1 &1151597804
 GameObject:
@@ -2849,7 +2878,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: eb6012aed850dec41b57b282f3f17707, type: 2}
+  - {fileID: 2100000, guid: 80e8c593978400340a3039ff8c189bab, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3414,10 +3443,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Scripts::EnemySpawner
   maxEnemiesAlive: 200
+  desiredEnemiesAlive: 40
+  initialEnemies: 40
   startSpawnDelay: 2
   spawnDelayDecrease: 0.05
   minimumSpawnDelay: 0.3
   seed: 12345
+  spawnRadius: 3
   enemyPrefab: {fileID: 7229312122015182329, guid: c150978f6bc90f745b11a437647f6112, type: 3}
 --- !u!4 &2102509902
 Transform:
