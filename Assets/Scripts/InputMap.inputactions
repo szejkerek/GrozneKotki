@@ -34,6 +34,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "SkillFast",
+                    "type": "Button",
+                    "id": "b637f0b1-3657-4d90-84b2-0519fe4bedf5",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "AttackFast",
                     "type": "Button",
                     "id": "8fb31278-afb7-44b9-9cd8-3efdd4ebf113",
@@ -275,6 +284,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "SkillStrong",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c4bd9ec1-344a-4808-b0bc-48963515a84b",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SkillFast",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2352bca5-3517-4489-8c7c-f5068068fb6c",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SkillFast",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

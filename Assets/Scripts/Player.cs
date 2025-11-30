@@ -43,6 +43,7 @@ public class Player : MonoBehaviour
         inputActions.Player.AttackStrong.performed += OnAttackStrong;
         inputActions.Player.AttackFast.performed += OnAttackFast;
         inputActions.Player.SkillStrong.performed += OnSkillStrong;
+        inputActions.Player.SkillFast.performed += OnSkillFast;
     }
 
     void OnDisable()
@@ -50,6 +51,7 @@ public class Player : MonoBehaviour
         inputActions.Player.AttackStrong.performed -= OnAttackStrong;
         inputActions.Player.AttackFast.performed -= OnAttackFast;
         inputActions.Player.SkillStrong.performed -= OnSkillStrong;
+        inputActions.Player.SkillFast.performed -= OnSkillFast;
 
         inputActions.Disable();
     }
@@ -68,6 +70,12 @@ public class Player : MonoBehaviour
     {
         UseSkill(2);
     }
+
+    private void OnSkillFast(InputAction.CallbackContext ctx)
+    {
+        UseSkill(3);
+    }
+
 
     void UseSkill(int index)
     {

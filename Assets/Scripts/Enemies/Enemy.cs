@@ -19,7 +19,7 @@ public class Enemy : MonoBehaviour, IDamagable
     private float recordTimer;
 
     [SerializeField] private float health = 100f;
-    [SerializeField] private float speed = 5f;
+    [SerializeField] public float speed = 5f;
     [SerializeField] private float minDelta = 0.05f;
 
     [Header("Time rewind")]

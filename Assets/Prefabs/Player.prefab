@@ -162,6 +162,7 @@ GameObject:
   - component: {fileID: 8182583811974516920}
   - component: {fileID: 3930652926197190840}
   - component: {fileID: 3436483896645947944}
+  - component: {fileID: -7152722211834148319}
   - component: {fileID: 3715660707164478302}
   m_Layer: 6
   m_Name: Player
@@ -310,6 +311,7 @@ MonoBehaviour:
   - {fileID: 3930652926197190840}
   - {fileID: 8182583811974516920}
   - {fileID: 3436483896645947944}
+  - {fileID: -7152722211834148319}
   spawnPoint: {fileID: 7463910244775978157}
   randomOffsetRange: 0.5
 --- !u!114 &8714671799788304992
@@ -326,6 +328,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   moveSpeed: 5
   rotationSpeed: 720
+  useMouseAimWhenAvailable: 1
 --- !u!114 &4347921309916645816
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -373,6 +376,9 @@ MonoBehaviour:
   fireballSpeed: 20
   projectilesInBurst: 3
   timeBetweenShots: 0.12
+  lateralOffset: 0.25
+  verticalOffset: 0.1
+  angleJitter: 3
 --- !u!114 &3436483896645947944
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -388,6 +394,21 @@ MonoBehaviour:
   cooldownUI: {fileID: 0}
   cooldown: 3
   trap: {fileID: 3774109828706338290, guid: 2f809e3bc13dab848a1e70d098c7faf1, type: 3}
+--- !u!114 &-7152722211834148319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8857796681995623189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e43af35de0112dc41ab8e6dc7e269fb2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Scripts::TrapSkill
+  cooldownUI: {fileID: 0}
+  cooldown: 2
+  trap: {fileID: 3774109828706338290, guid: 642ffea1e74cf794db63c1edfa173a76, type: 3}
 --- !u!114 &3715660707164478302
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -407,6 +428,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   hitCooldown: 0.5
+  maxColliders: 8
   knockbackForce: 5
   knockbackUpward: 0.5
 --- !u!1001 &65354594585225827
