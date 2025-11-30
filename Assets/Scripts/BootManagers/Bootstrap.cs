@@ -18,7 +18,7 @@ public class Bootstrap : MonoBehaviour
     }
     
     public AudioManager AudioManager;
-    public SceneManager SceneManager;
+    public SceneController SceneManager;
     public GhostRunManager GhostRunManager;
     
     

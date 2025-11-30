@@ -12,9 +12,26 @@ public class Player : MonoBehaviour
     private InputMap inputActions;
     public Transform spawnPoint;
 
+    // zakres losowej odchyłki pozycji
+    [SerializeField] float randomOffsetRange = 0.5f;
+
     void Awake()
     {
         inputActions = new InputMap();
+    }
+
+    void Start()
+    {
+        if (spawnPoint != null)
+        {
+            Vector3 offset = new Vector3(
+                Random.Range(-randomOffsetRange, randomOffsetRange),
+                0f,
+                Random.Range(-randomOffsetRange, randomOffsetRange)
+            );
+
+            transform.position = spawnPoint.position + offset;
+        }
     }
 
     void OnEnable()

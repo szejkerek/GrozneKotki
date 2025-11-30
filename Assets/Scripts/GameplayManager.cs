@@ -7,7 +7,7 @@ public class GameplayManager : MonoBehaviour
     public static GameplayManager Instance { get; private set; }
 
     InputMap input;
-
+    private bool reseted = false;
     [SerializeField] private int staringTime = 60;
     
     [SerializeField] public MainCamera mainCamera;
@@ -45,6 +45,10 @@ public class GameplayManager : MonoBehaviour
 
     private void HandleLostTime()
     {
+        if(reseted)
+            return;
+
+        reseted = true;
         RestartLevel();
     }
 
