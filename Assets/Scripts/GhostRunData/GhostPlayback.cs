@@ -36,6 +36,10 @@ public class GhostPlayback : MonoBehaviour
         var recorder = GetComponent<GhostRecorder>();
         if (recorder != null)
             recorder.enabled = false;
+        
+        var proximityHit = GetComponent<PlayerProximityHit>();
+        if (proximityHit != null)
+            proximityHit.enabled = false;
 
         if (ghostPlayer != null)
             ghostPlayer.enabled = false;

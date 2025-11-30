@@ -9,6 +9,9 @@ public class PlayerControllerInputSystem : MonoBehaviour
     public float moveSpeed = 5f;
     public float rotationSpeed = 10f;   // treat this as responsiveness
 
+    [Header("Aiming")]
+    public bool useMouseAimWhenAvailable = true;
+
     private InputMap inputActions;
     private CapsuleCollider capsule;
     private Rigidbody rb;
@@ -58,11 +61,8 @@ public class PlayerControllerInputSystem : MonoBehaviour
 
     private void HandleMovementAndAiming()
     {
-        // left stick movement input
+        // left stick or WASD
         Vector2 moveInput = inputActions.Player.Move.ReadValue<Vector2>();
-
-        // right stick aim input
-        Vector2 lookInput = inputActions.Player.Look.ReadValue<Vector2>();
 
         // compute camera based forward and right on horizontal plane
         Vector3 camForward = Vector3.forward;
@@ -89,7 +89,7 @@ public class PlayerControllerInputSystem : MonoBehaviour
         }
 
         // movement direction in world space based on camera
-        // up on stick means up on the screen
+        // up on stick or W means up on the screen
         Vector3 moveDir = camForward * moveInput.y + camRight * moveInput.x;
 
         animator.SetBool("Running", moveDir.magnitude > 0.1f);
@@ -100,10 +100,47 @@ public class PlayerControllerInputSystem : MonoBehaviour
         Vector3 moveDelta = moveDir * moveSpeed * Time.fixedDeltaTime;
         rb.MovePosition(rb.position + moveDelta);
 
-        // aim direction in world space based on camera
-        Vector3 lookDir = camForward * lookInput.y + camRight * lookInput.x;
+        // 1) try mouse aim for keyboard and mouse
+        Vector3 lookDir = Vector3.zero;
+        bool usedMouseAim = false;
 
-        // if there is input from right stick, face that
+        if (useMouseAimWhenAvailable && Mouse.current != null && camTransform != null)
+        {
+            Vector2 mousePos = Mouse.current.position.ReadValue();
+
+            Camera cam = camTransform.GetComponent<Camera>();
+            if (cam == null) cam = Camera.main;
+
+            if (cam != null)
+            {
+                Ray ray = cam.ScreenPointToRay(mousePos);
+
+                // plane at the player height
+                Plane plane = new Plane(Vector3.up, new Vector3(0f, rb.position.y, 0f));
+                float hitDist;
+                if (plane.Raycast(ray, out hitDist))
+                {
+                    Vector3 hitPoint = ray.GetPoint(hitDist);
+                    Vector3 dir = hitPoint - rb.position;
+                    dir.y = 0f;
+
+                    if (dir.sqrMagnitude > 0.001f)
+                    {
+                        lookDir = dir.normalized;
+                        usedMouseAim = true;
+                    }
+                }
+            }
+        }
+
+        // 2) if mouse is not used, fall back to right stick look
+        if (!usedMouseAim)
+        {
+            Vector2 lookInput = inputActions.Player.Look.ReadValue<Vector2>();
+            lookDir = camForward * lookInput.y + camRight * lookInput.x;
+        }
+
+        // if there is some aim direction, face that
         // otherwise face movement direction
         Vector3 faceDir = lookDir.sqrMagnitude > 0.001f ? lookDir : moveDir;
 
@@ -118,5 +155,4 @@ public class PlayerControllerInputSystem : MonoBehaviour
             rb.MoveRotation(smoothRot);
         }
     }
-
 }

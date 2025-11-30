@@ -1,15 +1,17 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class EnemySpawner : MonoBehaviour
 {
     public static EnemySpawner Instance;
 
     [Header("Settings")]
-    public int maxEnemiesAlive = 200;
-    public int desiredEnemiesAlive = 40;      // ile wrogów chcemy mieć mniej więcej na scenie
-    public int initialEnemies = 40;           // ilu wystawić od razu na starcie
+    public int maxEnemiesAlive;
+    public int desiredEnemiesAlive = 40;
+    public int initialEnemies = 40;
 
     public float startSpawnDelay = 2f;
     public float spawnDelayDecrease = 0.05f;
@@ -19,16 +21,22 @@ public class EnemySpawner : MonoBehaviour
     public int seed = 12345;
 
     [Header("Spawn area")]
-    public float spawnRadius = 3f;            // promień losowego odchylenia od punktu spawnu
+    public float spawnRadius = 3f;
 
     [Header("References")]
     public GameObject enemyPrefab;
     List<SpawnPoint> spawnPoints = new List<SpawnPoint>();
 
+    [Header("Boss settings")]
+    public GameObject firstBossPrefab;        // prefab bossa z komponentem Enemy
+    public Transform firstBossSpawnPoint;     // gdzie ma się pojawić boss
+    public int firstBossKillThreshold = 25;   // po tylu zabójstwach pojawia się boss
+
     private float currentDelay;
     private int killedCount;
     private float timer;
     private int activeEnemies;
+    private bool firstBossSpawned;
 
     void Awake()
     {
@@ -38,17 +46,20 @@ public class EnemySpawner : MonoBehaviour
 
     void Start()
     {
-        // stały seed dla deterministyczności
         Random.InitState(seed);
         currentDelay = startSpawnDelay;
 
-        // pierwsza fala na starcie
+        Enemy.OnEnemyKilled += EnemyKilled;
         SpawnInitialWave();
+    }
+
+    private void OnDestroy()
+    {
+        Enemy.OnEnemyKilled -= EnemyKilled;
     }
 
     void Update()
     {
-        // pilnujemy aby było przynajmniej desiredEnemiesAlive przeciwników
         if (activeEnemies < desiredEnemiesAlive)
         {
             int toSpawn = desiredEnemiesAlive - activeEnemies;
@@ -60,7 +71,6 @@ public class EnemySpawner : MonoBehaviour
             }
         }
 
-        // normalny ciągły spawn w czasie
         timer += Time.deltaTime;
         if (timer >= currentDelay)
         {
@@ -71,7 +81,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void SpawnInitialWave()
     {
-        int safety = 1000; // zabezpieczenie przed nieskończoną pętlą
+        int safety = 1000;
 
         int toSpawn = Mathf.Min(initialEnemies, maxEnemiesAlive);
 
@@ -89,7 +99,6 @@ public class EnemySpawner : MonoBehaviour
         if (enemyPrefab == null)
             return false;
 
-        // limit jednocześnie żyjących
         if (activeEnemies >= maxEnemiesAlive)
             return false;
 
@@ -103,7 +112,6 @@ public class EnemySpawner : MonoBehaviour
         if (active.Count == 0)
             return false;
 
-        // deterministyczny wybór punktu
         int index = Random.Range(0, active.Count);
         SpawnPoint chosen = active[index];
 
@@ -117,24 +125,56 @@ public class EnemySpawner : MonoBehaviour
 
         if (spawnRadius > 0f)
         {
-            // losowy offset w płaszczyźnie XZ
             Vector2 offset2D = Random.insideUnitCircle * spawnRadius;
             spawnPos += new Vector3(offset2D.x, 0f, offset2D.y);
         }
 
-        GameObject obj = Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
+        Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
         activeEnemies++;
     }
 
     public void EnemyKilled()
     {
         killedCount++;
-        
+
+        if (!firstBossSpawned && killedCount >= firstBossKillThreshold)
+        {
+            SpawnFirstBoss();
+        }
+
         if (currentDelay > minimumSpawnDelay)
         {
             currentDelay -= spawnDelayDecrease;
             if (currentDelay < minimumSpawnDelay)
                 currentDelay = minimumSpawnDelay;
         }
+    }
+
+    private void SpawnFirstBoss()
+    {
+        if (firstBossSpawned)
+            return;
+
+        if (firstBossPrefab == null)
+        {
+            Debug.LogWarning("FirstBoss prefab is not assigned on EnemySpawner");
+            return;
+        }
+
+        Vector3 spawnPos = Vector3.zero;
+
+        if (firstBossSpawnPoint != null)
+            spawnPos = firstBossSpawnPoint.position;
+
+        GameObject bossObj = Instantiate(firstBossPrefab, spawnPos, Quaternion.identity);
+        activeEnemies++;
+
+        firstBossSpawned = true;
+        Debug.Log("FirstBoss spawned");
+    }
+
+    public void EnemyDespawned()
+    {
+        activeEnemies = Mathf.Max(0, activeEnemies - 1);
     }
 }

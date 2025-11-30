@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 public class Enemy : MonoBehaviour, IDamagable
 {
@@ -327,9 +329,13 @@ public class Enemy : MonoBehaviour, IDamagable
 
     public void Kill()
     {
-        OnEnemyKilled?.Invoke();
         animator.SetBool("Attack", true);
         isDead = true;
-        //Destroy(gameObject);
+        Destroy(gameObject, 1f);
+    }
+
+    private void OnDestroy()
+    {
+        OnEnemyKilled?.Invoke();
     }
 }

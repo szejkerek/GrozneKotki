@@ -320,7 +320,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a457dc857c5b25445ae727ed86e004e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameplayManager
+  MaxEnemy: 250
   staringTime: 60
+  Spawner: {fileID: 0}
   mainCamera: {fileID: 0}
   TimeBar: {fileID: 4513804871222843444}
 --- !u!1 &4167981516340216465
@@ -5451,6 +5453,9 @@ MonoBehaviour:
   seed: 12345
   spawnRadius: 6.49
   enemyPrefab: {fileID: 7229312122015182329, guid: c150978f6bc90f745b11a437647f6112, type: 3}
+  firstBossPrefab: {fileID: 8757501136881193490, guid: fda2a39e6456dbb45b373004f2c60b12, type: 3}
+  firstBossSpawnPoint: {fileID: 2646096580658875990}
+  firstBossKillThreshold: 25
 --- !u!1 &7580212916952242017
 GameObject:
   m_ObjectHideFlags: 0
@@ -5763,6 +5768,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7284721407125177565, guid: 7ba7f9a2240aa55459804f9d03aa7449, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7284721407125177565, guid: 7ba7f9a2240aa55459804f9d03aa7449, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
@@ -5783,6 +5792,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7640051162143670017, guid: 7ba7f9a2240aa55459804f9d03aa7449, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7640051162143670017, guid: 7ba7f9a2240aa55459804f9d03aa7449, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
@@ -5800,6 +5813,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8341694833941290711, guid: 7ba7f9a2240aa55459804f9d03aa7449, type: 3}
       propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341694833941290711, guid: 7ba7f9a2240aa55459804f9d03aa7449, type: 3}
+      propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8341694833941290711, guid: 7ba7f9a2240aa55459804f9d03aa7449, type: 3}
@@ -5903,6 +5920,7 @@ MonoBehaviour:
   inactive: {r: 0.25882354, g: 0.2516834, b: 0.2509804, a: 0}
   activeCount: 0
   maxHealth: 0
+  initialTransform: {x: 0, y: 0, z: 0}
 --- !u!224 &3895347209439547585 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2219243966223571304, guid: 7ba7f9a2240aa55459804f9d03aa7449, type: 3}

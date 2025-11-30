@@ -11,11 +11,21 @@ public class FastAttackSkill : PlayerSkill
     public int projectilesInBurst = 3;
     public float timeBetweenShots = 0.12f;
 
+    [Header("Hogward Style")]
+    [Tooltip("Jak bardzo pociski są odsunięte od siebie w poziomie")]
+    public float lateralOffset = 0.25f;
+
+    [Tooltip("Jak bardzo pociski są odsunięte od siebie w pionie")]
+    public float verticalOffset = 0.1f;
+
+    [Tooltip("Jak duży kąt losowego odchylenia (stopnie)")]
+    public float angleJitter = 3f;
+
     protected override void OnUse()
     {
         if (fireballPrefab == null)
         {
-            Debug.LogWarning("TripleFireballSkill has no fireballPrefab assigned");
+            Debug.LogWarning("FastAttackSkill has no fireballPrefab assigned");
             return;
         }
 
@@ -30,20 +40,43 @@ public class FastAttackSkill : PlayerSkill
 
         for (int i = 0; i < projectilesInBurst; i++)
         {
-            Vector3 direction = _player != null ? _player.transform.forward : transform.forward;
-            if (direction.sqrMagnitude < 0.0001f)
-                direction = Vector3.forward;
+            // Bazowy kierunek lotu
+            Vector3 forward = _player != null ? _player.transform.forward : transform.forward;
+            if (forward.sqrMagnitude < 0.0001f)
+                forward = Vector3.forward;
+
+            Vector3 right = _player != null ? _player.transform.right : transform.right;
+            Vector3 up = _player != null ? _player.transform.up : transform.up;
+
+            // Lekko przesuwamy pocisk w prawo lewo i w górę dół,
+            // ale w małym zakresie, żeby dalej wyglądały na równoległe
+            float side = Random.Range(-lateralOffset, lateralOffset);
+            float vertical = Random.Range(-verticalOffset, verticalOffset);
+
+            Vector3 spawnPos = spawnPoint.position + right * side + up * vertical;
+
+            // Delikatne odchylenie kąta, żeby nie były identyczne, ale wciąż lecą mniej więcej równolegle
+            float yaw = Random.Range(-angleJitter, angleJitter);
+            float pitch = Random.Range(-angleJitter * 0.5f, angleJitter * 0.5f);
+
+            Quaternion baseRot = Quaternion.LookRotation(forward, Vector3.up);
+            Quaternion jitterRot =
+                Quaternion.AngleAxis(yaw, Vector3.up) *
+                Quaternion.AngleAxis(pitch, right);
+
+            Quaternion finalRot = jitterRot * baseRot;
+            Vector3 finalDir = finalRot * Vector3.forward;
 
             GameObject fireball = Instantiate(
                 fireballPrefab,
-                spawnPoint.position,
-                Quaternion.LookRotation(direction, Vector3.up)
+                spawnPos,
+                finalRot
             );
 
             FireballProjectile projectile = fireball.GetComponent<FireballProjectile>();
             if (projectile != null)
             {
-                projectile.Launch(direction, fireballSpeed);
+                projectile.Launch(finalDir, fireballSpeed);
             }
 
             if (i < projectilesInBurst - 1)

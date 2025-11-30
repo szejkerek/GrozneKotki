@@ -71,7 +71,9 @@ public class Player : MonoBehaviour
 
     void UseSkill(int index)
     {
-        skills[index].TryUse();
-        ghostRecorder.RecordSkillUse(index);
+        if (skills[index].TryUse())
+        {
+            ghostRecorder.RecordSkillUse(index);
+        }
     }
 }

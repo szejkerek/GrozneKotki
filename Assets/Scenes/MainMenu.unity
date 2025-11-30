@@ -285,7 +285,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d46d8723c0c55d547a8958d5e1218ad5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MainMenu
-  gameSceneName: BartekTesting
+  gameSceneName: Werusia
   firstSelectedButton: {fileID: 1575246722}
 --- !u!4 &933540898
 Transform:

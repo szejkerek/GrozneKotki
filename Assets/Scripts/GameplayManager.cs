@@ -6,10 +6,11 @@ public class GameplayManager : MonoBehaviour
 {
     public static GameplayManager Instance { get; private set; }
 
+    public int MaxEnemy = 250;
     InputMap input;
     private bool reseted = false;
     [SerializeField] private int staringTime = 60;
-    
+    public EnemySpawner Spawner;
     public MainCamera mainCamera;
     Player player;
     public TimeBar TimeBar;
@@ -23,6 +24,7 @@ public class GameplayManager : MonoBehaviour
         }
 
         Instance = this;
+        Spawner.maxEnemiesAlive = MaxEnemy;
         mainCamera = FindObjectOfType<MainCamera>();
         player = FindObjectOfType<Player>();
         input = new InputMap();
@@ -93,4 +95,5 @@ public class GameplayManager : MonoBehaviour
         Bootstrap.Instance.SceneManager.LoadScene(menuSceneName);
         GhostRunManager.Instance.RemoveAllRuns();
     }
+    
 }

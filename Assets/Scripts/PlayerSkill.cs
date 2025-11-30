@@ -15,13 +15,14 @@ public abstract class PlayerSkill : MonoBehaviour
 
     float lastUseTime = Mathf.NegativeInfinity;
     
-    public void TryUse()
+    public bool TryUse()
     {
         if (Time.time < lastUseTime + cooldown)
-            return;
+            return false;
 
         lastUseTime = Time.time;
         OnUse();
+        return true;
     }
 
     private void Update()
