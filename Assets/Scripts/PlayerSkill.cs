@@ -4,6 +4,7 @@ using UnityEngine;
 public abstract class PlayerSkill : MonoBehaviour
 {
     protected Player _player;
+    [SerializeField] protected PowerupCooldownUI cooldownUI;
 
     private void Awake()
     {
@@ -21,6 +22,12 @@ public abstract class PlayerSkill : MonoBehaviour
 
         lastUseTime = Time.time;
         OnUse();
+    }
+
+    private void Update()
+    {
+        if(cooldownUI == null) return;
+        cooldownUI.SetTimePercentUI(Mathf.Min(1, (Time.time - lastUseTime) /cooldown));
     }
 
     protected abstract void OnUse();

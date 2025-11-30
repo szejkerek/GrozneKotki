@@ -234,7 +234,7 @@ public class Enemy : MonoBehaviour, IDamagable
         if (statesToRewindLeft <= 0 || history.Count == 0)
         {
             rewinding = false;
-            animator.SetBool("Backwards", false);
+            animator.SetBool("Backward", false);
             RandomizeAnimation();
         }
     }
@@ -265,7 +265,7 @@ public class Enemy : MonoBehaviour, IDamagable
 
         statesStepAccumulator = 0f;
         rewinding = true;
-        animator.SetBool("Backwards", true);
+        animator.SetBool("Backward", true);
         RandomizeAnimation();
     }
 
