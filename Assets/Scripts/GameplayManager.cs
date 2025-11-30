@@ -10,7 +10,7 @@ public class GameplayManager : MonoBehaviour
 
     [SerializeField] private int staringTime = 60;
     
-    [SerializeField] MainCamera mainCamera;
+    [SerializeField] public MainCamera mainCamera;
     [SerializeField] GameObject player;
     public TimeBar TimeBar;
 
