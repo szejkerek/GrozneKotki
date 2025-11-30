@@ -14,6 +14,8 @@ public class PlayerControllerInputSystem : MonoBehaviour
     private Rigidbody rb;
     private Animator animator;
 
+    private float fireCooldown;
+
     void Awake()
     {
         inputActions = new InputMap();
@@ -23,7 +25,7 @@ public class PlayerControllerInputSystem : MonoBehaviour
         rb.useGravity = true;
         rb.isKinematic = false;
         rb.constraints = RigidbodyConstraints.FreezeRotation;
-        rb.interpolation = RigidbodyInterpolation.Interpolate;   // smoother visual motion
+        rb.interpolation = RigidbodyInterpolation.Interpolate;
 
         animator = GetComponentInChildren<Animator>();
     }
@@ -33,28 +35,36 @@ public class PlayerControllerInputSystem : MonoBehaviour
 
     void FixedUpdate()
     {
-        HandleMovement();
+        HandleMovementAndAiming();
     }
 
-    private void HandleMovement()
+    private void HandleMovementAndAiming()
     {
+        // lewa gałka ruch
         Vector2 moveInput = inputActions.Player.Move.ReadValue<Vector2>();
-        Vector3 input = new Vector3(moveInput.x, 0f, moveInput.y);
+        Vector3 moveDir = new Vector3(moveInput.x, 0f, moveInput.y);
 
-        animator.SetBool("Running", input.magnitude > 0.1f);
+        // animacja biegu po ruchu, nie po celowaniu
+        animator.SetBool("Running", moveDir.magnitude > 0.1f);
 
-        float mag = input.magnitude;
-        if (mag > 1f) input /= mag;
+        float mag = moveDir.magnitude;
+        if (mag > 1f) moveDir /= mag;
 
-        Vector3 moveDelta = input * moveSpeed * Time.fixedDeltaTime;
+        Vector3 moveDelta = moveDir * moveSpeed * Time.fixedDeltaTime;
         rb.MovePosition(rb.position + moveDelta);
 
-        // Smooth rotation
-        if (input.sqrMagnitude > 0.001f)
-        {
-            Quaternion targetRot = Quaternion.LookRotation(input, Vector3.up);
+        // prawa gałka celowanie
+        Vector2 lookInput = inputActions.Player.Look.ReadValue<Vector2>();
+        Vector3 lookDir = new Vector3(lookInput.x, 0f, lookInput.y);
 
-            // rotationSpeed is a factor 0..infinity, so we map it to a 0..1 lerp value per physics tick
+        // jeśli jest wejście z prawej gałki, obracamy według niej
+        // jeśli nie, obracamy według kierunku ruchu
+        Vector3 faceDir = lookDir.sqrMagnitude > 0.001f ? lookDir : moveDir;
+
+        if (faceDir.sqrMagnitude > 0.001f)
+        {
+            Quaternion targetRot = Quaternion.LookRotation(faceDir, Vector3.up);
+
             float t = rotationSpeed * Time.fixedDeltaTime;
             t = Mathf.Clamp01(t);
 
@@ -62,4 +72,5 @@ public class PlayerControllerInputSystem : MonoBehaviour
             rb.MoveRotation(smoothRot);
         }
     }
+
 }

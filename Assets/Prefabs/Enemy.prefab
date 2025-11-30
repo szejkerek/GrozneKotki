@@ -218,10 +218,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemies
   health: 100
-  speed: 1
+  speed: 2.5
   minDelta: 0.2
   maxStoredStates: 1000
   rewindPlaybackDuration: 1
+  cornerJitterRadius: 0.05
 --- !u!96 &2254708314005098977
 TrailRenderer:
   serializedVersion: 3

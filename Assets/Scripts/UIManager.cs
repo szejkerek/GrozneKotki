@@ -4,7 +4,7 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
 
-    [SerializeField] private timeBar TimeBar;
+    [SerializeField] private TimeBar TimeBar;
 
     private void Awake()
     {

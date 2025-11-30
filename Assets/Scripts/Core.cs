@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 public class Core : MonoBehaviour
@@ -6,7 +7,8 @@ public class Core : MonoBehaviour
     {
         if (other.tag == "Enemy")
         {
-            UIManager.Instance.SubtractTime(5);
+            GameplayManager.Instance.TimeBar.SubtractTimeUI(5, byEnemy: true);
+            other.gameObject.GetComponent<Enemy>().Kill();
         }
     }
 

@@ -5,7 +5,7 @@ using DG.Tweening;
 using UnityEngine.InputSystem;
 using TMPro;
 
-public class timeBar : MonoBehaviour
+public class TimeBar : MonoBehaviour
 {
     public float timeMax = 100;
     public float timeLeft = 10;
