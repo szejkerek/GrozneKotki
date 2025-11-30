@@ -32,20 +32,20 @@ public class PlayerProximityHit : MonoBehaviour
     void Awake()
     {
         renderers = GetComponentsInChildren<Renderer>();
-        // originalColors = new Color[renderers.Length];
-        //
-        // for (int i = 0; i < renderers.Length; i++)
-        // {
-        //     if (renderers[i] != null && renderers[i].sharedMaterial != null)
-        //     {
-        //         originalColors[i] = renderers[i].sharedMaterial.color;
-        //     }
-        // }
+        originalColors = new Color[renderers.Length];
+        
+        for (int i = 0; i < renderers.Length; i++)
+        {
+            if (renderers[i] != null && renderers[i].sharedMaterial != null)
+            {
+                originalColors[i] = renderers[i].sharedMaterial.color;
+            }
+        }
 
         rb = GetComponent<Rigidbody>();
 
         overlapResults = new Collider[maxColliders];
-        //flashWait = new WaitForSeconds(flashTime);
+        flashWait = new WaitForSeconds(flashTime);
     }
 
     void Update()
@@ -112,10 +112,10 @@ public class PlayerProximityHit : MonoBehaviour
 
         GameplayManager.Instance.TimeBar.SubtractTimeUI(10, byEnemy: false);
 
-        // if (!isFlashing && gameObject.activeInHierarchy)
-        // {
-        //     StartCoroutine(Flash());
-        // }
+        if (!isFlashing && gameObject.activeInHierarchy)
+        {
+            StartCoroutine(Flash());
+        }
     }
 
     IEnumerator Flash()

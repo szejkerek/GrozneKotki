@@ -422,7 +422,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 087e64c75ec3d064c8144b5690097802, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Scripts::PlayerProximityHit
-  hitColor: {r: 1, g: 0, b: 0, a: 1}
+  hitColor: {r: 1, g: 1, b: 1, a: 1}
   flashTime: 0.15
   detectionRadius: 2
   enemyLayer:
