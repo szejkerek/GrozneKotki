@@ -18410,6 +18410,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameplayManager
       objectReference: {fileID: 0}
+    - target: {fileID: 4188797788218005974, guid: 79219686db3cc194aa653710b7ac0085, type: 3}
+      propertyPath: m_fontSize
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 4188797788218005974, guid: 79219686db3cc194aa653710b7ac0085, type: 3}
+      propertyPath: m_fontColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4188797788218005974, guid: 79219686db3cc194aa653710b7ac0085, type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4188797788218005974, guid: 79219686db3cc194aa653710b7ac0085, type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4188797788218005974, guid: 79219686db3cc194aa653710b7ac0085, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 4188797788218005974, guid: 79219686db3cc194aa653710b7ac0085, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 4811446436421531304, guid: 79219686db3cc194aa653710b7ac0085, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
