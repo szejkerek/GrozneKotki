@@ -673,7 +673,7 @@ PrefabInstance:
     - target: {fileID: -8380783556237360187, guid: 1619018a5b3a4284d8845b2f2d09a1d0, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: c329c75dcbaa0a946ab13434310fc737, type: 2}
+      objectReference: {fileID: 2100000, guid: 4af509a1b392cf342946d9e1983e72c2, type: 2}
     - target: {fileID: -8343894014087287100, guid: 1619018a5b3a4284d8845b2f2d09a1d0, type: 3}
       propertyPath: m_Layer
       value: 7
@@ -685,7 +685,7 @@ PrefabInstance:
     - target: {fileID: -6838469388590892448, guid: 1619018a5b3a4284d8845b2f2d09a1d0, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: c329c75dcbaa0a946ab13434310fc737, type: 2}
+      objectReference: {fileID: 2100000, guid: 4af509a1b392cf342946d9e1983e72c2, type: 2}
     - target: {fileID: -6415790494268509736, guid: 1619018a5b3a4284d8845b2f2d09a1d0, type: 3}
       propertyPath: m_Layer
       value: 7
@@ -737,7 +737,7 @@ PrefabInstance:
     - target: {fileID: -1547348769253965558, guid: 1619018a5b3a4284d8845b2f2d09a1d0, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: c329c75dcbaa0a946ab13434310fc737, type: 2}
+      objectReference: {fileID: 2100000, guid: 4af509a1b392cf342946d9e1983e72c2, type: 2}
     - target: {fileID: -1470139882241228941, guid: 1619018a5b3a4284d8845b2f2d09a1d0, type: 3}
       propertyPath: m_Layer
       value: 7
@@ -805,7 +805,7 @@ PrefabInstance:
     - target: {fileID: 4523480060844978375, guid: 1619018a5b3a4284d8845b2f2d09a1d0, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: c329c75dcbaa0a946ab13434310fc737, type: 2}
+      objectReference: {fileID: 2100000, guid: 4af509a1b392cf342946d9e1983e72c2, type: 2}
     - target: {fileID: 4700718891997078985, guid: 1619018a5b3a4284d8845b2f2d09a1d0, type: 3}
       propertyPath: m_Layer
       value: 7
