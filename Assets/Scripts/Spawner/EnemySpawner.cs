@@ -125,9 +125,16 @@ public class EnemySpawner : MonoBehaviour
         return true;
     }
 
+    [SerializeField] private GameObject winningScreen;
+
     public void EnemyKilled()
     {
         killedCount++;
+
+        if (killedCount == 1)
+        {
+            winningScreen.gameObject.SetActive(true);
+        }
 
         // w momencie osiągnięcia progu resetujemy licznik
         if (killedCount == fastEnemyStartKills)
