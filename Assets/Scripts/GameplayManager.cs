@@ -10,8 +10,8 @@ public class GameplayManager : MonoBehaviour
     private bool reseted = false;
     [SerializeField] private int staringTime = 60;
     
-    [SerializeField] public MainCamera mainCamera;
-    [SerializeField] Player player;
+    public MainCamera mainCamera;
+    Player player;
     public TimeBar TimeBar;
 
     void Awake()

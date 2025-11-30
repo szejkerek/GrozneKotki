@@ -162,6 +162,7 @@ GameObject:
   - component: {fileID: 8182583811974516920}
   - component: {fileID: 3930652926197190840}
   - component: {fileID: 3436483896645947944}
+  - component: {fileID: 3715660707164478302}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -310,6 +311,7 @@ MonoBehaviour:
   - {fileID: 8182583811974516920}
   - {fileID: 3436483896645947944}
   spawnPoint: {fileID: 7463910244775978157}
+  randomOffsetRange: 0.5
 --- !u!114 &8714671799788304992
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -336,7 +338,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efc3cdcd69564e69ad73b377ad001212, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GhostRecorder
-  sampleInterval: 0.02
+  sampleInterval: 0.05
 --- !u!114 &8182583811974516920
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -349,6 +351,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90cc85e93bf75b14da15da2c304cfcce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FireballSkill
+  cooldownUI: {fileID: 0}
   cooldown: 2
   fireballPrefab: {fileID: 3774109828706338290, guid: dcec909dcea57b24c98412a9aa5af96d, type: 3}
   fireballSpeed: 15
@@ -364,6 +367,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aac95924764a3b40acb58e29e7d471b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FastAttackSkill
+  cooldownUI: {fileID: 0}
   cooldown: 1
   fireballPrefab: {fileID: 3774109828706338290, guid: 83080619a95378243bc1b1db69cf62b8, type: 3}
   fireballSpeed: 20
@@ -381,8 +385,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e43af35de0112dc41ab8e6dc7e269fb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TrapSkill
+  cooldownUI: {fileID: 0}
   cooldown: 3
   trap: {fileID: 3774109828706338290, guid: 2f809e3bc13dab848a1e70d098c7faf1, type: 3}
+--- !u!114 &3715660707164478302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8857796681995623189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 087e64c75ec3d064c8144b5690097802, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Scripts::PlayerProximityHit
+  hitColor: {r: 1, g: 0, b: 0, a: 1}
+  flashTime: 0.15
+  detectionRadius: 2
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  hitCooldown: 0.5
+  knockbackForce: 5
+  knockbackUpward: 0.5
 --- !u!1001 &65354594585225827
 PrefabInstance:
   m_ObjectHideFlags: 0
