@@ -60,6 +60,11 @@ PrefabInstance:
       insertIndex: 5
       addedObject: {fileID: 3474642454454850554}
   m_SourcePrefab: {fileID: 100100000, guid: 371e8a99d3c36564b926fa9e6828d24e, type: 3}
+--- !u!1 &5103666842374806308 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7059617432152847765, guid: 371e8a99d3c36564b926fa9e6828d24e, type: 3}
+  m_PrefabInstance: {fileID: 2822368649490247345}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &6757130568844653988 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8857796681995623189, guid: 371e8a99d3c36564b926fa9e6828d24e, type: 3}
@@ -78,4 +83,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GhostPlayback
   ghostMaterial: {fileID: 2100000, guid: 4c15dfa442b5fec47953483cde983196, type: 2}
-  explodeVfx: {fileID: 0}
+  lightingVFX: {fileID: 5103666842374806308}
+  explodeVfx: {fileID: 6744127768302982459, guid: 56c207baa2562784a83721f3ad03aacf, type: 3}

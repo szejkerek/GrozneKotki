@@ -3,6 +3,7 @@ using UnityEngine;
 public class GhostPlayback : MonoBehaviour
 {
     public Material ghostMaterial;
+    public GameObject lightingVFX;
     public GameObject explodeVfx;
 
     GhostRunData run;
@@ -28,6 +29,8 @@ public class GhostPlayback : MonoBehaviour
 
     void Start()
     {
+        lightingVFX.gameObject.SetActive(false);
+
         // disable real input
         var controller = GetComponent<PlayerControllerInputSystem>();
         if (controller != null)
@@ -72,7 +75,20 @@ public class GhostPlayback : MonoBehaviour
         if (elapsed >= run.duration)
         {
             if (explodeVfx)
+            {
+                Collider[] colliders = Physics.OverlapSphere(transform.position, 3f);
+
+                foreach (Collider col in colliders)
+                {
+                    IDamagable damagable = col.GetComponent<IDamagable>();
+                    if (damagable != null)
+                    {
+                        damagable.TakeDamage(200);
+                    }
+                }
+
                 Instantiate(explodeVfx, transform.position, Quaternion.identity);
+            }
 
             Destroy(gameObject);
         }
