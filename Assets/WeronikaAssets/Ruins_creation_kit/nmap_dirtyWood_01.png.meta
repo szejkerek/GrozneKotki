@@ -1,5 +1,12 @@
 fileFormatVersion: 2
 guid: 427beaf8732822b46b2d5c39ef9fdb2d
+AssetOrigin:
+  serializedVersion: 1
+  productId: 2235
+  packageName: Ruins Creation Kit
+  packageVersion: 1.2
+  assetPath: Assets/Ruins_creation_kit/nmap_dirtyWood_01.png
+  uploadId: 26040
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -69,10 +76,10 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 1024
+    maxTextureSize: 256
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 3
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -115,10 +122,3 @@ TextureImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 2235
-  packageName: Ruins Creation Kit
-  packageVersion: 1.2
-  assetPath: Assets/Ruins_creation_kit/nmap_dirtyWood_01.png
-  uploadId: 26040
