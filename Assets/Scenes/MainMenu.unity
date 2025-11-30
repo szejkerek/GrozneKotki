@@ -424,7 +424,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &705399269
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1408,7 +1408,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: ChronoMage
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b3ca175bc6d9c684cba873e24ae08208, type: 2}
   m_sharedMaterial: {fileID: 3840207028163202468, guid: b3ca175bc6d9c684cba873e24ae08208, type: 2}
