@@ -7,7 +7,7 @@ public class Core : MonoBehaviour
     {
         if (other.tag == "Enemy")
         {
-            GameplayManager.Instance.TimeBar.SubtractTimeUI(5, byEnemy: true);
+            GameplayManager.Instance.TimeBar.SubtractTimeUI(2, byEnemy: true);
             other.gameObject.GetComponent<Enemy>().Kill();
         }
     }
