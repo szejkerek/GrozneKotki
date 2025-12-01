@@ -47,9 +47,9 @@ public class PowerupCooldownUI : MonoBehaviour
         SetTimePercentUI(Math.Clamp(timeLeft + amount, 0, 1) / 1);
         if(timeLeft == 1)
         {
-            bar.DOColor(color, 0.3f);
-            icon.DOColor(color, 0.3f);
-            ShowWithPunch();
+            //bar.DOColor(color, 0.3f);
+            //icon.DOColor(color, 0.3f);
+            //ShowWithPunch();
         }
     }
 
@@ -59,15 +59,15 @@ public class PowerupCooldownUI : MonoBehaviour
         Color c = color;
         c = new Color(c.r * 0.5f, c.g * 0.5f, c.b * 0.5f, c.a*.9f);
 
-        bar.DOColor(c, 0.3f);
-        icon.DOColor(c, 0.3f);
+        //bar.DOColor(c, 0.3f);
+        //icon.DOColor(c, 0.3f);
     }
 
     public void SetTimePercentUI(float percent)
     {
         timeLeft = percent;
-        bar.DOFillAmount(timeLeft / 1, .1f).SetEase(Ease.Linear);
-        icon.DOFillAmount(timeLeft / 1, .1f).SetEase(Ease.Linear);
+        //bar.DOFillAmount(timeLeft / 1, .1f).SetEase(Ease.Linear);
+        //icon.DOFillAmount(timeLeft / 1, .1f).SetEase(Ease.Linear);
     }
 
 

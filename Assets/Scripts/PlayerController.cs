@@ -7,25 +7,29 @@ public class PlayerControllerInputSystem : MonoBehaviour
 {
     [Header("Movement")]
     public float moveSpeed = 5f;
-    public float rotationSpeed = 10f;   // treat this as responsiveness
+    
+    [Header("Rotation")]
+    public float rotationSpeed = 15f;
 
-    [Header("Aiming")]
-    public bool useMouseAimWhenAvailable = true;
+    [Header("Mouse Aiming")]
+    public bool useMouseAim = true;
+    public LayerMask groundLayer = ~0;
+    public float raycastDistance = 1000f;
+    
+    [Header("Debug")]
+    public bool showDebugGizmos = true;
 
     private InputMap inputActions;
-    private CapsuleCollider capsule;
     private Rigidbody rb;
     private Animator animator;
-
-    // reference to the gameplay camera
-    private Transform camTransform;
-
-    private float fireCooldown;
+    private Camera mainCam;
+    
+    private Vector3 lastMouseWorldPos;
+    private bool hasValidMouseTarget = false;
 
     void Awake()
     {
         inputActions = new InputMap();
-        capsule = GetComponent<CapsuleCollider>();
         rb = GetComponent<Rigidbody>();
 
         rb.useGravity = true;
@@ -38,121 +42,154 @@ public class PlayerControllerInputSystem : MonoBehaviour
 
     void Start()
     {
-        // try to get camera from GameplayManager
         if (GameplayManager.Instance != null && GameplayManager.Instance.mainCamera != null)
         {
-            camTransform = GameplayManager.Instance.mainCamera.transform;
+            mainCam = GameplayManager.Instance.mainCamera.GetComponent<Camera>();
         }
         else
         {
-            // fallback if something is not wired yet
-            Camera cam = Camera.main;
-            if (cam != null) camTransform = cam.transform;
+            mainCam = Camera.main;
+        }
+
+        if (mainCam == null)
+        {
+            Debug.LogError("No camera found! Mouse aiming won't work.");
         }
     }
 
     void OnEnable() => inputActions.Enable();
     void OnDisable() => inputActions.Disable();
 
-    void FixedUpdate()
+    void Update()
     {
-        HandleMovementAndAiming();
+        if (useMouseAim && mainCam != null)
+        {
+            UpdateMouseWorldPosition();
+        }
     }
 
-    private void HandleMovementAndAiming()
+    void FixedUpdate()
     {
-        // left stick or WASD
-        Vector2 moveInput = inputActions.Player.Move.ReadValue<Vector2>();
+        HandleMovement();
+        HandleRotation();
+    }
 
-        // compute camera based forward and right on horizontal plane
-        Vector3 camForward = Vector3.forward;
-        Vector3 camRight   = Vector3.right;
+    private void UpdateMouseWorldPosition()
+    {
+        Vector2 mouseScreenPos = Mouse.current.position.ReadValue();
+        Ray ray = mainCam.ScreenPointToRay(mouseScreenPos);
 
-        if (camTransform != null)
+        // Try raycast to ground
+        if (Physics.Raycast(ray, out RaycastHit hit, raycastDistance, groundLayer))
         {
-            // start with camera forward
-            camForward = camTransform.forward;
-
-            // if camera is very top down, forward is almost vertical
-            // in that case use camera.up as "screen up"
-            if (Mathf.Abs(camForward.y) > 0.5f)
-            {
-                camForward = camTransform.up;
-            }
-
-            camForward.y = 0f;
-            camForward.Normalize();
-
-            camRight = camTransform.right;
-            camRight.y = 0f;
-            camRight.Normalize();
+            lastMouseWorldPos = hit.point;
+            hasValidMouseTarget = true;
         }
-
-        // movement direction in world space based on camera
-        // up on stick or W means up on the screen
-        Vector3 moveDir = camForward * moveInput.y + camRight * moveInput.x;
-
-        animator.SetBool("Running", moveDir.magnitude > 0.1f);
-
-        float mag = moveDir.magnitude;
-        if (mag > 1f) moveDir /= mag;
-
-        Vector3 moveDelta = moveDir * moveSpeed * Time.fixedDeltaTime;
-        rb.MovePosition(rb.position + moveDelta);
-
-        // 1) try mouse aim for keyboard and mouse
-        Vector3 lookDir = Vector3.zero;
-        bool usedMouseAim = false;
-
-        if (useMouseAimWhenAvailable && Mouse.current != null && camTransform != null)
+        else
         {
-            Vector2 mousePos = Mouse.current.position.ReadValue();
-
-            Camera cam = camTransform.GetComponent<Camera>();
-            if (cam == null) cam = Camera.main;
-
-            if (cam != null)
+            // Fallback: use a plane at player height
+            Plane groundPlane = new Plane(Vector3.up, rb.position);
+            if (groundPlane.Raycast(ray, out float enter))
             {
-                Ray ray = cam.ScreenPointToRay(mousePos);
-
-                // plane at the player height
-                Plane plane = new Plane(Vector3.up, new Vector3(0f, rb.position.y, 0f));
-                float hitDist;
-                if (plane.Raycast(ray, out hitDist))
-                {
-                    Vector3 hitPoint = ray.GetPoint(hitDist);
-                    Vector3 dir = hitPoint - rb.position;
-                    dir.y = 0f;
-
-                    if (dir.sqrMagnitude > 0.001f)
-                    {
-                        lookDir = dir.normalized;
-                        usedMouseAim = true;
-                    }
-                }
+                lastMouseWorldPos = ray.GetPoint(enter);
+                hasValidMouseTarget = true;
             }
         }
+    }
 
-        // 2) if mouse is not used, fall back to right stick look
-        if (!usedMouseAim)
+ private void HandleMovement()
+{
+    Vector2 moveInput = inputActions.Player.Move.ReadValue<Vector2>();
+
+    // For top-down camera, we need screen-space directions
+    Vector3 camForward = Vector3.forward;
+    Vector3 camRight = Vector3.right;
+
+    if (mainCam != null)
+    {
+        // Get the camera's right vector
+        camRight = mainCam.transform.right;
+        camRight.y = 0f;
+        camRight.Normalize();
+
+        // Get perpendicular direction - SWAPPED ORDER to fix direction
+        camForward = Vector3.Cross(camRight, Vector3.up);
+    }
+
+    // Calculate movement direction
+    Vector3 moveDir = (camForward * moveInput.y + camRight * moveInput.x);
+    
+    float magnitude = moveDir.magnitude;
+    if (magnitude > 1f)
+    {
+        moveDir /= magnitude;
+    }
+
+    // Update animator
+    if (animator != null)
+    {
+        animator.SetBool("Running", magnitude > 0.1f);
+    }
+
+    // Move
+    Vector3 moveDelta = moveDir * moveSpeed * Time.fixedDeltaTime;
+    rb.MovePosition(rb.position + moveDelta);
+}
+
+private void HandleRotation()
+{
+    Vector3 lookDirection = Vector3.zero;
+
+    if (useMouseAim && hasValidMouseTarget)
+    {
+        // Look at mouse position
+        lookDirection = lastMouseWorldPos - rb.position;
+        lookDirection.y = 0f;
+    }
+    else
+    {
+        // Fallback to right stick
+        Vector2 lookInput = inputActions.Player.Look.ReadValue<Vector2>();
+        
+        if (lookInput.sqrMagnitude > 0.1f)
         {
-            Vector2 lookInput = inputActions.Player.Look.ReadValue<Vector2>();
-            lookDir = camForward * lookInput.y + camRight * lookInput.x;
+            Vector3 camForward = Vector3.forward;
+            Vector3 camRight = Vector3.right;
+            
+            if (mainCam != null)
+            {
+                camRight = mainCam.transform.right;
+                camRight.y = 0f;
+                camRight.Normalize();
+                
+                // SWAPPED ORDER here too
+                camForward = Vector3.Cross(camRight, Vector3.up);
+            }
+            
+            lookDirection = (camForward * lookInput.y + camRight * lookInput.x);
         }
+    }
 
-        // if there is some aim direction, face that
-        // otherwise face movement direction
-        Vector3 faceDir = lookDir.sqrMagnitude > 0.001f ? lookDir : moveDir;
+    // Rotate towards target direction
+    if (lookDirection.sqrMagnitude > 0.01f)
+    {
+        Quaternion targetRotation = Quaternion.LookRotation(lookDirection);
+        Quaternion newRotation = Quaternion.Slerp(rb.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
+        rb.MoveRotation(newRotation);
+    }
+}
 
-        if (faceDir.sqrMagnitude > 0.001f)
+    void OnDrawGizmos()
+    {
+        if (!showDebugGizmos || !Application.isPlaying) return;
+
+        if (hasValidMouseTarget)
         {
-            Quaternion targetRot = Quaternion.LookRotation(faceDir, Vector3.up);
-
-            float t = rotationSpeed * Time.fixedDeltaTime;
-            t = Mathf.Clamp01(t);
-
-            Quaternion smoothRot = Quaternion.Slerp(rb.rotation, targetRot, t);
-            rb.MoveRotation(smoothRot);
+            Gizmos.color = Color.green;
+            Gizmos.DrawLine(transform.position, lastMouseWorldPos);
+            
+            Gizmos.color = Color.red;
+            Gizmos.DrawSphere(lastMouseWorldPos, 0.3f);
         }
     }
 }

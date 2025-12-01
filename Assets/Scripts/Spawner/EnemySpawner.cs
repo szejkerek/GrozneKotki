@@ -131,7 +131,7 @@ public class EnemySpawner : MonoBehaviour
     {
         killedCount++;
 
-        if (killedCount == 1)
+        if (killedCount == 100)
         {
             winningScreen.gameObject.SetActive(true);
         }

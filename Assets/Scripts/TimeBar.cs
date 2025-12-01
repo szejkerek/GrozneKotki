@@ -49,7 +49,7 @@ public class TimeBar : MonoBehaviour
         if (byEnemy)
         {
             FlipHourglass(true);
-            ShowWithPunch(displayedSubtractTime);
+            //ShowWithPunch(displayedSubtractTime);
         }
     }
 

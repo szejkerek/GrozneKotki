@@ -22,20 +22,20 @@ public class MainMenu : MonoBehaviour
             EventSystem.current.SetSelectedGameObject(firstSelectedButton);
         }
 
-        if (tutorialImage != null)
-        {
-            tutorialBaseScale = tutorialImage.transform.localScale;
-        }
-
-        if (tutorialObject != null)
-        {
-            tutorialObject.SetActive(false);
-        }
-
-        if (filledTutorial != null)
-        {
-            filledTutorial.fillAmount = 0f;
-        }
+        // if (tutorialImage != null)
+        // {
+        //     tutorialBaseScale = tutorialImage.transform.localScale;
+        // }
+        //
+        // if (tutorialObject != null)
+        // {
+        //     tutorialObject.SetActive(false);
+        // }
+        //
+        // if (filledTutorial != null)
+        // {
+        //     filledTutorial.fillAmount = 0f;
+        // }
     }
 
     public void OnPlayClicked()
@@ -43,7 +43,9 @@ public class MainMenu : MonoBehaviour
         if (isWaitingForInput)
             return;
 
-        StartCoroutine(ShowTutorialAndWaitForKey());
+        Bootstrap.Instance.SceneManager.LoadScene(gameSceneName);
+
+        //StartCoroutine(ShowTutorialAndWaitForKey());
     }
 
     private IEnumerator ShowTutorialAndWaitForKey()
@@ -86,7 +88,6 @@ public class MainMenu : MonoBehaviour
             yield return null;
         }
 
-        Bootstrap.Instance.SceneManager.LoadScene(gameSceneName);
     }
 
     public void OnQuitClicked()

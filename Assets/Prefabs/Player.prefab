@@ -329,7 +329,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   moveSpeed: 5
   rotationSpeed: 720
-  useMouseAimWhenAvailable: 1
+  useMouseAimWhenAvailable: 0
 --- !u!114 &4347921309916645816
 MonoBehaviour:
   m_ObjectHideFlags: 0
