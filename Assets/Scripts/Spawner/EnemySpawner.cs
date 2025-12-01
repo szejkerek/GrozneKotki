@@ -129,7 +129,16 @@ public class EnemySpawner : MonoBehaviour
 
     public void EnemyKilled()
     {
+        if (this == null) return;
+
         killedCount++;
+
+        if (!firstBossSpawned && killedCount >= firstBossKillThreshold)
+        {
+            firstBossSpawned = true;  // BLOKADA NA POCZĄTKU
+            SpawnFirstBoss();
+        }
+
 
         if (killedCount == 100)
         {
@@ -141,11 +150,7 @@ public class EnemySpawner : MonoBehaviour
         {
             normalSpawnCounter = 0;
         }
-
-        if (!firstBossSpawned && killedCount >= firstBossKillThreshold)
-        {
-            SpawnFirstBoss();
-        }
+        
 
         if (currentDelay > minimumSpawnDelay)
         {
@@ -211,4 +216,7 @@ public class EnemySpawner : MonoBehaviour
     {
         activeEnemies = Mathf.Max(0, activeEnemies - 1);
     }
+    
+
+
 }

@@ -1,4 +1,5 @@
 using System.Collections;
+using DG.Tweening;
 using UnityEngine;
 
 public class Bootstrap : MonoBehaviour
@@ -15,6 +16,10 @@ public class Bootstrap : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+        
+        DOTween.Init(false, true, LogBehaviour.ErrorsOnly);
+        DOTween.defaultAutoPlay = AutoPlay.All;
+        DOTween.defaultAutoKill = true;
     }
     
     public AudioManager AudioManager;

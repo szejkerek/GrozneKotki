@@ -336,6 +336,11 @@ public class Enemy : MonoBehaviour, IDamagable
 
     private void OnDestroy()
     {
-        OnEnemyKilled?.Invoke();
+        if (gameObject.scene.isLoaded)
+        {
+            OnEnemyKilled?.Invoke();
+            EnemySpawner.Instance?.EnemyDespawned(); // NOWE
+        }
     }
+
 }
