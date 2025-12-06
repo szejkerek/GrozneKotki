@@ -1,6 +1,7 @@
 using System.Collections;
 using DG.Tweening;
 using UnityEngine;
+using Zenject;
 
 public class Bootstrap : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class Bootstrap : MonoBehaviour
 
     void Awake()
     {
+        Debug.Log("ProjectContexts: " + FindObjectsOfType<ProjectContext>().Length);
+
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);

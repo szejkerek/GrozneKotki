@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 5c6585cc3c6f8534583e152165942657
   - enabled: 1
-    path: Assets/Scenes/Werusia.unity
+    path: Assets/Scenes/Gameplay.unity
     guid: 66d9aaab0e3c8bd4b8cba68305482176
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
